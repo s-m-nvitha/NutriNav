@@ -6,6 +6,7 @@ import Header from '../components/Header';
 
 const DashboardLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const { user, logout } = useAuth();
 
   const getGreeting = () => {
@@ -17,10 +18,12 @@ const DashboardLayout = () => {
 
   return (
     <div className="min-h-screen flex flex-col lg:flex-row">
-      <Sidebar 
-        isOpen={isSidebarOpen} 
-        onClose={() => setIsSidebarOpen(false)} 
-      />
+      <Sidebar
+  isOpen={isSidebarOpen}
+  isCollapsed={isCollapsed}
+  toggleCollapse={() => setIsCollapsed(!isCollapsed)}
+  onClose={() => setIsSidebarOpen(false)}
+/>
       
       <div className="flex-1 flex flex-col min-h-screen">
         <Header 
@@ -30,19 +33,7 @@ const DashboardLayout = () => {
         
         <main className="flex-1 p-4 lg:p-8">
           <div className="max-w-7xl mx-auto">
-            <div className="mb-8">
-              <h1 className="text-3xl font-bold text-gray-800">
-                {getGreeting()}, {user?.full_name || 'User'} 👋
-              </h1>
-              <p className="text-gray-600 mt-1">
-                {new Date().toLocaleDateString('en-US', { 
-                  weekday: 'long', 
-                  year: 'numeric', 
-                  month: 'long', 
-                  day: 'numeric' 
-                })}
-              </p>
-            </div>
+            <div className="mb-4"></div>
             
             <Outlet />
           </div>
