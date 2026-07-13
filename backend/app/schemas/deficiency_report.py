@@ -1,0 +1,21 @@
+from pydantic import BaseModel
+from datetime import datetime
+
+
+class DeficiencyReportBase(BaseModel):
+    nutrient_name: str
+    status: str
+    severity: str
+
+
+class DeficiencyReportCreate(DeficiencyReportBase):
+    pass
+
+
+class DeficiencyReportResponse(DeficiencyReportBase):
+    id: int
+    user_id: int
+    created_at: datetime
+
+    class Config:
+        from_attributes = True

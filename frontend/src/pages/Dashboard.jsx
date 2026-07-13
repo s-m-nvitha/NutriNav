@@ -1,0 +1,211 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import Card from '../components/Card';
+import Button from '../components/Button';
+
+const Dashboard = () => {
+  return (
+    <div className="space-y-8">
+      {/* Profile Completion Status */}
+      <Link to="/health-profile">
+        <Card className="bg-gradient-to-r from-blue-500 to-teal-500 text-white cursor-pointer hover:shadow-xl transition-shadow">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <h3 className="text-lg font-semibold">Health Profile Completion</h3>
+              <p className="text-blue-100 mt-1">Complete your profile to get personalized recommendations</p>
+            </div>
+            <div className="text-right">
+              <div className="text-3xl font-bold">40%</div>
+              <p className="text-blue-100 text-sm">Complete</p>
+            </div>
+          </div>
+          <div className="mt-4 bg-white/20 rounded-full h-2">
+            <div className="bg-white rounded-full h-2 w-2/5"></div>
+          </div>
+        </Card>
+      </Link>
+
+      {/* Main AI Health Assistant - Full Width */}
+      <Card hover className="border-l-4 border-l-blue-500">
+        <div className="flex items-start justify-between mb-6">
+          <div>
+            <h3 className="text-2xl font-bold text-gray-800">AI Health Assistant</h3>
+            <p className="text-gray-600 mt-1">Your personal AI-powered health companion</p>
+          </div>
+          <div className="text-4xl">🤖</div>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="bg-blue-50 rounded-xl p-4 hover:shadow-md transition-shadow">
+            <h4 className="font-semibold text-gray-800 mb-2">Health Summary</h4>
+            <p className="text-sm text-gray-600">Upload reports for AI insights</p>
+          </div>
+          
+          <div className="bg-teal-50 rounded-xl p-4 hover:shadow-md transition-shadow">
+            <h4 className="font-semibold text-gray-800 mb-2">Upload Reports</h4>
+            <Link to="/medical-reports">
+              <Button variant="primary" size="sm" className="mt-2">
+                Upload Now
+              </Button>
+            </Link>
+          </div>
+          
+          <div className="bg-gray-50 rounded-xl p-4 hover:shadow-md transition-shadow">
+            <h4 className="font-semibold text-gray-800 mb-2">AI Chat</h4>
+            <p className="text-sm text-gray-500">Coming Soon</p>
+          </div>
+          
+          <div className="bg-gray-50 rounded-xl p-4 hover:shadow-md transition-shadow">
+            <h4 className="font-semibold text-gray-800 mb-2">Analysis Status</h4>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 bg-yellow-400 rounded-full animate-pulse"></div>
+              <span className="text-sm text-gray-600">Waiting for data</span>
+            </div>
+          </div>
+        </div>
+      </Card>
+
+      {/* Preview Cards Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Deficiency Analysis Preview */}
+        <Link to="/results/deficiency">
+          <Card hover className="border-t-4 border-t-teal-500 cursor-pointer">
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <h3 className="text-lg font-bold text-gray-800">Deficiency Analysis</h3>
+                <p className="text-gray-500 text-sm mt-1">Track nutrient levels</p>
+              </div>
+              <div className="text-2xl">🔬</div>
+            </div>
+            
+            <div className="space-y-2 mb-4">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-medium text-gray-600">Vitamin D</span>
+                <div className="flex items-center gap-2">
+                  <div className="w-16 bg-gray-200 rounded-full h-1.5">
+                    <div className="bg-yellow-400 h-1.5 rounded-full w-3/5"></div>
+                  </div>
+                  <span className="text-xs text-gray-500">60%</span>
+                </div>
+              </div>
+              
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-medium text-gray-600">Vitamin B12</span>
+                <div className="flex items-center gap-2">
+                  <div className="w-16 bg-gray-200 rounded-full h-1.5">
+                    <div className="bg-green-400 h-1.5 rounded-full w-4/5"></div>
+                  </div>
+                  <span className="text-xs text-gray-500">80%</span>
+                </div>
+              </div>
+              
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-medium text-gray-600">Iron</span>
+                <div className="flex items-center gap-2">
+                  <div className="w-16 bg-gray-200 rounded-full h-1.5">
+                    <div className="bg-red-400 h-1.5 rounded-full w-2/5"></div>
+                  </div>
+                  <span className="text-xs text-gray-500">40%</span>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-teal-50 rounded-lg p-3">
+              <p className="text-xs text-gray-600">Upload reports for detailed analysis</p>
+            </div>
+          </Card>
+        </Link>
+
+        {/* Food Recommendations Preview */}
+        <Link to="/results/food-guidance">
+          <Card hover className="border-t-4 border-t-green-500 cursor-pointer">
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <h3 className="text-lg font-bold text-gray-800">Food Guidance</h3>
+                <p className="text-gray-500 text-sm mt-1">Personalized recommendations</p>
+              </div>
+              <div className="text-2xl">🍎</div>
+            </div>
+            
+            <div className="space-y-2 mb-4">
+              <div className="flex flex-wrap gap-1">
+                <span className="px-2 py-1 bg-red-50 rounded text-xs text-gray-600">Oranges</span>
+                <span className="px-2 py-1 bg-red-50 rounded text-xs text-gray-600">Bananas</span>
+              </div>
+              <div className="flex flex-wrap gap-1">
+                <span className="px-2 py-1 bg-green-50 rounded text-xs text-gray-600">Spinach</span>
+                <span className="px-2 py-1 bg-green-50 rounded text-xs text-gray-600">Broccoli</span>
+              </div>
+              <div className="flex flex-wrap gap-1">
+                <span className="px-2 py-1 bg-amber-50 rounded text-xs text-gray-600">Chicken</span>
+                <span className="px-2 py-1 bg-amber-50 rounded text-xs text-gray-600">Fish</span>
+              </div>
+            </div>
+            
+            <div className="bg-green-50 rounded-lg p-3">
+              <p className="text-xs text-gray-600">Complete profile for full recommendations</p>
+            </div>
+          </Card>
+        </Link>
+
+        {/* Body Nutrient Explorer Preview */}
+        <Link to="/results/body-explorer">
+          <Card hover className="border-t-4 border-t-purple-500 cursor-pointer">
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <h3 className="text-lg font-bold text-gray-800">Body Explorer</h3>
+                <p className="text-gray-500 text-sm mt-1">Nutrient relationships</p>
+              </div>
+              <div className="text-2xl">🧬</div>
+            </div>
+            
+            <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-lg p-4 mb-4">
+              <div className="flex flex-col items-center justify-center">
+                <div className="text-4xl mb-2">🫀</div>
+                <p className="text-xs text-gray-600 text-center">Interactive body mapping</p>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-3 gap-1">
+              {['Brain', 'Eyes', 'Heart'].map((part) => (
+                <button
+                  key={part}
+                  className="px-2 py-1.5 bg-purple-50 rounded text-xs font-medium text-gray-700 hover:bg-purple-100 transition-colors"
+                >
+                  {part}
+                </button>
+              ))}
+            </div>
+          </Card>
+        </Link>
+      </div>
+
+      {/* Quick Actions */}
+      <Card>
+        <h3 className="text-lg font-bold text-gray-800 mb-4">Quick Actions</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <Link to="/health-profile">
+            <Button variant="secondary" size="md" className="w-full">
+              Update Profile
+            </Button>
+          </Link>
+          <Link to="/medical-reports">
+            <Button variant="secondary" size="md" className="w-full">
+              Upload Report
+            </Button>
+          </Link>
+          <Link to="/results">
+  <Button variant="secondary" size="md" className="w-full">
+    View Results
+  </Button>
+</Link>
+          <Button variant="ghost" size="md" className="w-full">
+            Coming Soon
+          </Button>
+        </div>
+      </Card>
+    </div>
+  );
+};
+
+export default Dashboard;
