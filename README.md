@@ -1,4 +1,4 @@
-# NutriNav - AI Powered Personalized Nutrition Guide
+# NutriNav - AI Powered Personalized Nutrition Guidance System
 
 A production-ready full-stack application for personalized nutrition guidance using AI.
 
