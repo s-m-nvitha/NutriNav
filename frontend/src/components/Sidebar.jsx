@@ -1,6 +1,7 @@
 import React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import logo from '../assets/nn_logo.png';
+import sidebarLogo from '../assets/sidebar-logo.png';
+import sidebarBg from '../assets/sidebar-bg.png';
 import dashboardIcon from '../assets/dashboard.png';
 import healthIcon from '../assets/health_profile.png';
 import reportsIcon from '../assets/reports.png';
@@ -51,8 +52,14 @@ const Sidebar = ({
       )}
       
       <aside
+  style={{
+    backgroundImage: `url(${sidebarBg})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+  }}
   className={`
-    fixed top-0 left-0 h-screen bg-white shadow-2xl z-50
+    fixed top-0 left-0 min-h-screen shadow-2xl z-50
     ${isCollapsed ? 'lg:w-20' : 'lg:w-64'}
     transform transition-all duration-300 ease-in-out
     flex flex-col
@@ -66,23 +73,23 @@ const Sidebar = ({
   }`}
 >
   {!isCollapsed && (
-    <img
-      src={logo}
-      alt="NutriNav"
-      className="h-14 w-auto"
-    />
-  )}
+  <img
+    src={sidebarLogo}
+    alt="NutriNav"
+    className="h-14 w-auto"
+  />
+)}
 
   <button
-    onClick={toggleCollapse}
-    className="p-2 rounded-lg hover:bg-gray-100"
-  >
-    {isCollapsed ? (
-      <ChevronRight size={18} />
-    ) : (
-      <ChevronLeft size={18} />
-    )}
-  </button>
+  onClick={toggleCollapse}
+  className="p-2 rounded-lg text-white hover:bg-white hover:text-black transition-all duration-200"
+>
+  {isCollapsed ? (
+    <ChevronRight size={18} />
+  ) : (
+    <ChevronLeft size={18} />
+  )}
+</button>
 </div>
         
         
@@ -97,10 +104,10 @@ const Sidebar = ({
     ${isCollapsed ? 'justify-center' : 'gap-3'}
     transition-all duration-200
     ${
-      isActive(item.path)
-        ? 'bg-gradient-to-r from-blue-500 to-teal-500 text-white shadow-lg'
-        : 'text-gray-600 hover:bg-gray-100 hover:text-blue-600'
-    }
+  isActive(item.path)
+    ? 'bg-gradient-to-r from-[#FF7A00] to-[#FF4A1F] text-white shadow-lg'
+    : 'text-white hover:bg-transparent hover:border hover:border-white/50 hover:text-white'
+}
   `}
 >
 
