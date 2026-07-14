@@ -6,7 +6,8 @@ const Card = ({
   hover = false,
   ...props 
 }) => {
-  const baseStyles = 'glass-card p-6';
+  const baseStyles =
+  'bg-white border border-gray-200 rounded-[24px] shadow-sm p-6';
   const hoverStyles = hover ? 'hover:shadow-2xl hover:scale-[1.02] transition-all duration-300' : '';
   
   return (

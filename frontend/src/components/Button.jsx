@@ -13,7 +13,8 @@ const Button = ({
   const baseStyles = 'font-semibold rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
   
   const variants = {
-    primary: 'bg-gradient-to-r from-blue-500 to-teal-500 text-white hover:from-blue-600 hover:to-teal-600 focus:ring-blue-500 shadow-lg hover:shadow-xl',
+    primary:
+'bg-gradient-to-r from-[#FF7A00] to-[#FF4A1F] text-white hover:from-[#FF6A00] hover:to-[#FF3B16] focus:ring-orange-400 shadow-lg hover:shadow-xl',
     secondary: 'bg-white text-gray-700 border-2 border-gray-200 hover:border-blue-300 hover:text-blue-600 focus:ring-blue-500',
     danger: 'bg-red-500 text-white hover:bg-red-600 focus:ring-red-500',
     ghost: 'bg-transparent text-gray-600 hover:bg-gray-100 focus:ring-gray-500',

@@ -3,17 +3,14 @@
 @tailwind utilities;
 
 @layer base {
-  body {
-    @apply bg-gradient-to-br from-blue-50 via-white to-teal-50 min-h-screen;
-  }
+  html,
+body,
+#root {
+  min-height: 100%;
 }
 
-@layer components {
-  .glass-card {
-    @apply bg-white/70 backdrop-blur-lg border border-white/20 shadow-xl rounded-2xl;
-  }
-  
-  .gradient-text {
-    @apply bg-gradient-to-r from-blue-600 to-teal-500 bg-clip-text text-transparent;
-  }
+  body {
+  margin: 0;
+  background: white;
+}
 }

@@ -31,7 +31,7 @@ const DashboardLayout = () => {
           isMenuOpen={isSidebarOpen}
         />
         
-        <main className="flex-1 p-4 lg:p-8">
+        <main className="flex-1 p-4 lg:p-8 overflow-y-auto bg-white">
           <div className="max-w-7xl mx-auto">
             <div className="mb-4"></div>
             

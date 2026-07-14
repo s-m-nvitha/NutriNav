@@ -229,11 +229,7 @@ useEffect(() => {
             
             <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-lg p-4 mb-4">
   <div className="flex flex-col items-center justify-center">
-    <img
-      src={bodyExplorerIcon}
-      alt="Body Mapping"
-      className="w-16 h-16 object-contain mb-2"
-    />
+    <div className="text-4xl mb-2">🫀</div>
 
     <p className="text-xs text-gray-600 text-center">
       Interactive body mapping
