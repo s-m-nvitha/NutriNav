@@ -4,6 +4,7 @@ from ..database import get_db
 from ..models import DeficiencyReport
 from ..schemas import DeficiencyReportCreate, DeficiencyReportResponse
 from .auth import get_current_user
+from app.services.food_recommender import get_food_recommendations
 
 router = APIRouter(prefix="/deficiency-reports", tags=["Deficiency Reports"])
 
@@ -28,3 +29,18 @@ def get_deficiency_reports(
 ):
     reports = db.query(DeficiencyReport).filter(DeficiencyReport.user_id == current_user.id).all()
     return reports
+
+@router.get("/recommendations")
+def get_recommendations(
+    current_user=Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    deficiencies = (
+        db.query(DeficiencyReport)
+        .filter(
+            DeficiencyReport.user_id == current_user.id
+        )
+        .all()
+    )
+
+    return get_food_recommendations(deficiencies)

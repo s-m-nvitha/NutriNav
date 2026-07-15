@@ -1,6 +1,5 @@
 import fitz
 
-
 def extract_text_from_pdf(pdf_path):
     text = ""
 
@@ -11,6 +10,10 @@ def extract_text_from_pdf(pdf_path):
             text += page.get_text()
 
         doc.close()
+
+        print("========== PDF TEXT ==========")
+        print(text)
+        print("========== END ==========")
 
     except Exception as e:
         print(f"PDF extraction error: {e}")

@@ -1,18 +1,41 @@
+import re
+
+
 def analyze_deficiencies(text: str):
     text = text.lower()
 
     deficiencies = []
 
-    if "vitamin d" in text:
-        deficiencies.append("Vitamin D")
+    nutrients = {
+        "vitamin d": "Vitamin D",
+        "vitamin b12": "Vitamin B12",
+        "iron": "Iron",
+        "calcium": "Calcium"
+    }
 
-    if "vitamin b12" in text:
-        deficiencies.append("Vitamin B12")
+    deficiency_words = [
+        "low",
+        "deficient",
+        "insufficient",
+        "below normal"
+    ]
 
-    if "iron" in text:
-        deficiencies.append("Iron")
+    for keyword, display_name in nutrients.items():
 
-    if "calcium" in text:
-        deficiencies.append("Calcium")
+        # Looks for:
+        # Vitamin D : Low
+        # Vitamin B12 : Deficient
+
+        pattern = rf"{keyword}\s*:\s*([a-z ]+)"
+
+        match = re.search(pattern, text)
+
+        if match:
+            status = match.group(1).strip()
+
+            for word in deficiency_words:
+                if word in status:
+                    deficiencies.append(display_name)
+                    break
 
     return deficiencies

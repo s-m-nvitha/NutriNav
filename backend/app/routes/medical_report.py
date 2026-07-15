@@ -36,7 +36,7 @@ async def upload_medical_report(
         extracted_text = extract_text_from_pdf(file_path)
         deficiencies = analyze_deficiencies(extracted_text)
 
-    db_report = MedicalReport(
+        db_report = MedicalReport(
         user_id=current_user.id,
         file_name=file.filename,
         file_path=file_path,
@@ -48,7 +48,15 @@ async def upload_medical_report(
     db.refresh(db_report)
 
 
+    # Delete previous deficiency reports
+    db.query(DeficiencyReport).filter(
+        DeficiencyReport.user_id == current_user.id
+    ).delete()
+
+
+    # Save latest deficiency analysis
     for deficiency in deficiencies:
+
         db_deficiency = DeficiencyReport(
             user_id=current_user.id,
             nutrient_name=deficiency,
@@ -57,6 +65,30 @@ async def upload_medical_report(
         )
 
         db.add(db_deficiency)
+
+
+    db.commit()
+    db.refresh(db_report)
+
+
+    # Delete previous deficiency analysis for this user
+    db.query(DeficiencyReport).filter(
+        DeficiencyReport.user_id == current_user.id
+    ).delete()
+
+
+    # Save latest deficiency analysis
+    for deficiency in deficiencies:
+
+        db_deficiency = DeficiencyReport(
+            user_id=current_user.id,
+            nutrient_name=deficiency,
+            status="deficient",
+            severity="moderate"
+        )
+
+        db.add(db_deficiency)
+
 
     db.commit()
 
