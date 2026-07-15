@@ -6,7 +6,8 @@ import dashboardIcon from '../assets/dashboard.png';
 import healthIcon from '../assets/health_profile.png';
 import reportsIcon from '../assets/reports.png';
 import resultsIcon from '../assets/results.png';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 const Sidebar = ({
   isOpen,
   onClose,
@@ -14,7 +15,13 @@ const Sidebar = ({
   toggleCollapse,
 }) => {
   const location = useLocation();
+  const navigate = useNavigate();
+const { logout } = useAuth();
 
+const handleLogout = () => {
+  logout();
+  navigate('/login');
+};
   
   
   const menuItems = [
@@ -126,6 +133,26 @@ const Sidebar = ({
 
 </Link>
           ))}
+          <button
+  onClick={handleLogout}
+  className={`
+    w-full flex items-center px-4 py-3 rounded-xl
+    ${isCollapsed ? 'justify-center' : 'gap-3'}
+    text-red-300
+    hover:bg-red-500/20
+    transition-all duration-200
+  `}
+>
+  {!isCollapsed && (
+    <span className="font-medium">
+      Logout
+    </span>
+  )}
+
+  {isCollapsed && (
+    <span>↩</span>
+  )}
+</button>
                 </nav>
 
         

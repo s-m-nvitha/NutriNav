@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Card from '../components/Card';
 import { medicalReportService } from '../services/medicalReportService';
-
+import { deficiencyReportService } from '../services/deficiencyReportService';
 const Results = () => {
   const [uploadedReports, setUploadedReports] = useState([]);
-
+  const [deficiencies, setDeficiencies] = useState([]);
   useEffect(() => {
-    loadReports();
-  }, []);
+  loadReports();
+  loadDeficiencies();
+}, []);
 
   const loadReports = async () => {
     try {
@@ -17,6 +18,14 @@ const Results = () => {
       console.log('No reports uploaded yet');
     }
   };
+  const loadDeficiencies = async () => {
+  try {
+    const data = await deficiencyReportService.getAll();
+    setDeficiencies(data);
+  } catch (err) {
+    console.log('No deficiencies found');
+  }
+};
 
   return (
     <div className="space-y-6">
@@ -43,30 +52,31 @@ const Results = () => {
         <Card>
           <h3 className="text-xl font-bold text-gray-800 mb-4">Deficiencies Detected</h3>
           <div className="space-y-3">
-            <div className="flex items-center justify-between p-3 bg-red-50 rounded-xl">
-              <div className="flex items-center gap-3">
-                <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                <span className="font-medium text-gray-800">Vitamin D</span>
-              </div>
-              <span className="text-red-600 font-semibold">Severe</span>
-            </div>
-            
-            <div className="flex items-center justify-between p-3 bg-yellow-50 rounded-xl">
-              <div className="flex items-center gap-3">
-                <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                <span className="font-medium text-gray-800">Iron</span>
-              </div>
-              <span className="text-yellow-600 font-semibold">Moderate</span>
-            </div>
-            
-            <div className="flex items-center justify-between p-3 bg-green-50 rounded-xl">
-              <div className="flex items-center gap-3">
-                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                <span className="font-medium text-gray-800">Vitamin B12</span>
-              </div>
-              <span className="text-green-600 font-semibold">Normal</span>
-            </div>
-          </div>
+  {deficiencies.length > 0 ? (
+    deficiencies.map((item) => (
+      <div
+        key={item.id}
+        className="flex items-center justify-between p-3 bg-red-50 rounded-xl"
+      >
+        <div className="flex items-center gap-3">
+          <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+
+          <span className="font-medium text-gray-800">
+            {item.nutrient_name}
+          </span>
+        </div>
+
+        <span className="text-red-600 font-semibold">
+          {item.severity}
+        </span>
+      </div>
+    ))
+  ) : (
+    <p className="text-gray-500">
+      No deficiencies detected.
+    </p>
+  )}
+</div>
         </Card>
 
         <Card>

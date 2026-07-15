@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from datetime import datetime
+from typing import Optional
 
 
 class MedicalReportBase(BaseModel):
@@ -15,6 +16,7 @@ class MedicalReportResponse(MedicalReportBase):
     user_id: int
     file_path: str
     upload_date: datetime
+    extracted_text: Optional[str] = None
 
     class Config:
         from_attributes = True
