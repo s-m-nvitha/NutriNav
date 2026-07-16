@@ -4,6 +4,13 @@ from datetime import datetime
 
 class DeficiencyReportBase(BaseModel):
     nutrient_name: str
+
+    value: str | None = None
+    unit: str | None = None
+
+    reference_min: str | None = None
+    reference_max: str | None = None
+
     status: str
     severity: str
 

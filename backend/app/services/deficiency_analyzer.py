@@ -4,38 +4,82 @@ import re
 def analyze_deficiencies(text: str):
     text = text.lower()
 
-    deficiencies = []
+    results = []
 
-    nutrients = {
-        "vitamin d": "Vitamin D",
-        "vitamin b12": "Vitamin B12",
-        "iron": "Iron",
-        "calcium": "Calcium"
-    }
 
-    deficiency_words = [
-        "low",
-        "deficient",
-        "insufficient",
-        "below normal"
-    ]
+    # Vitamin D
+    vitamin_d_match = re.search(
+        r"(vitamin\s*d|vit\s*d|25[-\s]?oh\s*vitamin\s*d).*?(\d+\.?\d*)",
+        text
+    )
 
-    for keyword, display_name in nutrients.items():
+    if vitamin_d_match:
+        value = float(vitamin_d_match.group(2))
 
-        # Looks for:
-        # Vitamin D : Low
-        # Vitamin B12 : Deficient
+        if value < 20:
+            severity = "severe"
+        elif value < 30:
+            severity = "moderate"
+        else:
+            severity = "normal"
 
-        pattern = rf"{keyword}\s*:\s*([a-z ]+)"
+        if severity != "normal":
+            results.append({
+                "nutrient": "Vitamin D",
+                "value": value,
+                "unit": "ng/mL",
+                "severity": severity
+            })
 
-        match = re.search(pattern, text)
 
-        if match:
-            status = match.group(1).strip()
+    # Vitamin B12
+    b12_match = re.search(
+        r"(vitamin\s*b12|b12|cobalamin).*?(\d+\.?\d*)",
+        text
+    )
 
-            for word in deficiency_words:
-                if word in status:
-                    deficiencies.append(display_name)
-                    break
+    if b12_match:
+        value = float(b12_match.group(2))
 
-    return deficiencies
+        if value < 200:
+            severity = "severe"
+        elif value < 300:
+            severity = "moderate"
+        else:
+            severity = "normal"
+
+        if severity != "normal":
+            results.append({
+                "nutrient": "Vitamin B12",
+                "value": value,
+                "unit": "pg/mL",
+                "severity": severity
+            })
+
+
+    # Iron
+    iron_match = re.search(
+        r"(iron|serum\s*iron).*?(\d+\.?\d*)",
+        text
+    )
+
+    if iron_match:
+        value = float(iron_match.group(2))
+
+        if value < 50:
+            severity = "severe"
+        elif value < 70:
+            severity = "moderate"
+        else:
+            severity = "normal"
+
+        if severity != "normal":
+            results.append({
+                "nutrient": "Iron",
+                "value": value,
+                "unit": "µg/dL",
+                "severity": severity
+            })
+
+
+    return results

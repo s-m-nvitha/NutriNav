@@ -8,22 +8,76 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    const savedUser = localStorage.getItem('user');
-    
-    if (token && savedUser) {
-      setUser(JSON.parse(savedUser));
+
+  const checkUser = async () => {
+
+    const token =
+      localStorage.getItem('token');
+
+
+    if (token) {
+
+      try {
+
+        const userData =
+          await authService.getMe();
+
+
+        localStorage.setItem(
+          'user',
+          JSON.stringify(userData)
+        );
+
+
+        setUser(userData);
+
+
+      } catch(error) {
+
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+
+        setUser(null);
+
+      }
+
     }
+
+
     setLoading(false);
-  }, []);
+
+  };
+
+
+  checkUser();
+
+
+}, []);
 
   const login = async (credentials) => {
+
     const data = await authService.login(credentials);
-    localStorage.setItem('token', data.access_token);
-    localStorage.setItem('user', JSON.stringify(data.user));
-    setUser(data.user);
-    return data;
-  };
+
+    localStorage.setItem(
+      'token',
+      data.access_token
+    );
+
+
+    const userData = await authService.getMe();
+
+
+    localStorage.setItem(
+      'user',
+      JSON.stringify(userData)
+    );
+
+
+    setUser(userData);
+
+
+    return userData;
+};
 
   const signup = async (userData) => {
     const data = await authService.signup(userData);

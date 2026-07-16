@@ -11,6 +11,7 @@ import Results from '../pages/Results';
 import DeficiencyAnalysis from '../pages/DeficiencyAnalysis';
 import FoodGuidance from '../pages/FoodGuidance';
 import BodyExplorer from '../pages/BodyExplorer';
+import MealPlanner from '../pages/MealPlanner';
 
 
 
@@ -85,6 +86,7 @@ const AppRoutes = () => {
         <Route path="results/deficiency" element={<DeficiencyAnalysis />} />
 <Route path="results/food-guidance" element={<FoodGuidance />} />
 <Route path="results/body-explorer" element={<BodyExplorer />} />
+<Route path="meal-planner" element={<MealPlanner />} />
       </Route>
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>

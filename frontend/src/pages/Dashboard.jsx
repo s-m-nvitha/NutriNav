@@ -7,9 +7,12 @@ import { Link } from 'react-router-dom';
 import Card from '../components/Card';
 import Button from '../components/Button';
 import { healthProfileService } from '../services/healthProfileService';
-
+import { deficiencyReportService } from '../services/deficiencyReportService';
 const Dashboard = () => {
+  console.log("Dashboard component loaded");
   const [completion, setCompletion] = useState(0);
+  const [recommendations, setRecommendations] = useState({});
+  const [deficiencies, setDeficiencies] = useState([]);
   const loadProfileCompletion = async () => {
   try {
     const profile = await healthProfileService.get();
@@ -41,8 +44,53 @@ const Dashboard = () => {
     setCompletion(0);
   }
 };
+const loadNutritionData = async () => {
+
+  try {
+
+    const deficiencyData =
+      await deficiencyReportService.getAll();
+
+console.log("Deficiency data from API:", deficiencyData);
+
+const recommendationData =
+      await deficiencyReportService.getRecommendations();
+
+console.log(
+  "Recommendations API:",
+  recommendationData
+);
+
+
+setDeficiencies(
+  recommendationData.deficiencies || []
+);
+
+
+setRecommendations(
+  recommendationData.food_recommendations || {}
+);
+
+
+  } catch(error){
+
+    console.log(
+      "Nutrition data error:",
+      error
+    );
+
+  }
+
+};
+
 useEffect(() => {
+
+  console.log("Dashboard mounted");
+
   loadProfileCompletion();
+
+  loadNutritionData();
+
 }, []);
 
   return (
@@ -139,36 +187,39 @@ useEffect(() => {
             </div>
             
             <div className="space-y-2 mb-4">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-gray-600">Vitamin D</span>
-                <div className="flex items-center gap-2">
-                  <div className="w-16 bg-gray-200 rounded-full h-1.5">
-                    <div className="bg-yellow-400 h-1.5 rounded-full w-3/5"></div>
-                  </div>
-                  <span className="text-xs text-gray-500">60%</span>
-                </div>
-              </div>
-              
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-gray-600">Vitamin B12</span>
-                <div className="flex items-center gap-2">
-                  <div className="w-16 bg-gray-200 rounded-full h-1.5">
-                    <div className="bg-green-400 h-1.5 rounded-full w-4/5"></div>
-                  </div>
-                  <span className="text-xs text-gray-500">80%</span>
-                </div>
-              </div>
-              
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-gray-600">Iron</span>
-                <div className="flex items-center gap-2">
-                  <div className="w-16 bg-gray-200 rounded-full h-1.5">
-                    <div className="bg-red-400 h-1.5 rounded-full w-2/5"></div>
-                  </div>
-                  <span className="text-xs text-gray-500">40%</span>
-                </div>
-              </div>
-            </div>
+
+{
+  deficiencies.length > 0 ? (
+
+    deficiencies.map((item)=>(
+
+      <div
+        key={item.id}
+        className="flex items-center justify-between"
+      >
+
+        <span className="text-xs font-medium text-gray-600">
+          {item.nutrient}
+        </span>
+
+        <span className="text-xs text-red-500">
+          {item.severity}
+        </span>
+
+      </div>
+
+    ))
+
+  ) : (
+
+    <p className="text-xs text-gray-500">
+      No deficiencies detected yet
+    </p>
+
+  )
+}
+
+</div>
             
             <div className="bg-teal-50 rounded-lg p-3">
               <p className="text-xs text-gray-600">Upload reports for detailed analysis</p>
@@ -191,22 +242,56 @@ useEffect(() => {
 />
             </div>
             
-            <div className="space-y-2 mb-4">
-              <div className="flex flex-wrap gap-1">
-                <span className="px-2 py-1 bg-red-50 rounded text-xs text-gray-600">Oranges</span>
-                <span className="px-2 py-1 bg-red-50 rounded text-xs text-gray-600">Bananas</span>
-              </div>
-              <div className="flex flex-wrap gap-1">
-                <span className="px-2 py-1 bg-green-50 rounded text-xs text-gray-600">Spinach</span>
-                <span className="px-2 py-1 bg-green-50 rounded text-xs text-gray-600">Broccoli</span>
-              </div>
-              <div className="flex flex-wrap gap-1">
-                <span className="px-2 py-1 bg-amber-50 rounded text-xs text-gray-600">Chicken</span>
-                <span className="px-2 py-1 bg-amber-50 rounded text-xs text-gray-600">Fish</span>
-              </div>
-            </div>
-            
-            <div className="bg-green-50 rounded-lg p-3">
+          
+              <div className="space-y-3 mb-4">
+
+{
+Object.keys(recommendations).length > 0 ? (
+
+Object.entries(recommendations).map(
+([nutrient, foods]) => (
+
+<div key={nutrient}>
+
+<p className="text-xs font-semibold text-gray-700">
+{nutrient}
+</p>
+
+<div className="flex flex-wrap gap-1 mt-1">
+
+{
+Array.isArray(foods) && foods.map((food)=>(
+
+<span
+key={food}
+className="px-2 py-1 bg-green-50 rounded text-xs text-gray-600"
+>
+{food}
+</span>
+
+))
+}
+
+</div>
+
+</div>
+
+))
+
+) : (
+
+<p className="text-xs text-gray-500">
+Complete profile for recommendations
+</p>
+
+)
+
+}
+
+</div>
+
+
+<div className="bg-green-50 rounded-lg p-3">
               <p className="text-xs text-gray-600">Complete profile for full recommendations</p>
             </div>
           </Card>

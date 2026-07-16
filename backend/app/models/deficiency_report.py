@@ -10,6 +10,11 @@ class DeficiencyReport(Base):
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     nutrient_name = Column(String(100), nullable=False)
+    value = Column(String(50), nullable=True)
+    unit = Column(String(50), nullable=True)
+
+    reference_min = Column(String(50), nullable=True)
+    reference_max = Column(String(50), nullable=True)
     status = Column(String(50))  # normal, deficient, excessive
     severity = Column(String(20))  # mild, moderate, severe
     created_at = Column(DateTime(timezone=True), server_default=func.now())
