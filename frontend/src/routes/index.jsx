@@ -12,6 +12,7 @@ import DeficiencyAnalysis from '../pages/DeficiencyAnalysis';
 import FoodGuidance from '../pages/FoodGuidance';
 import BodyExplorer from '../pages/BodyExplorer';
 import MealPlanner from '../pages/MealPlanner';
+import Chat from '../pages/Chat';
 
 
 
@@ -87,6 +88,7 @@ const AppRoutes = () => {
 <Route path="results/food-guidance" element={<FoodGuidance />} />
 <Route path="results/body-explorer" element={<BodyExplorer />} />
 <Route path="meal-planner" element={<MealPlanner />} />
+<Route path="chat" element={<Chat />} />
       </Route>
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>

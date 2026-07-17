@@ -6,15 +6,34 @@ import { healthProfileService } from '../services/healthProfileService';
 
 const HealthProfile = () => {
   const [formData, setFormData] = useState({
-    age: '',
-    gender: '',
-    height: '',
-    weight: '',
-    dietary_preference: '',
-    diseases: '',
-    allergies: '',
-    lifestyle: '',
-  });
+  age: '',
+  gender: '',
+  height: '',
+  weight: '',
+  dietary_preference: '',
+  diseases: '',
+  allergies: '',
+  lifestyle: '',
+
+  activity_level: '',
+  goal: '',
+
+  work_type: '',
+  workout_type: '',
+  workout_timing: '',
+
+  hunger_pattern: '',
+  cravings: '',
+
+  sleep_duration: '',
+  stress_level: '',
+
+  meal_frequency: '',
+  water_intake: '',
+
+  budget_preference: '',
+  cooking_preference: '',
+});
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState('');
@@ -37,6 +56,24 @@ const HealthProfile = () => {
           diseases: profile.diseases || '',
           allergies: profile.allergies || '',
           lifestyle: profile.lifestyle || '',
+          activity_level: profile.activity_level || '',
+          goal: profile.goal || '',
+
+          work_type: profile.work_type || '',
+          workout_type: profile.workout_type || '',
+          workout_timing: profile.workout_timing || '',
+
+          hunger_pattern: profile.hunger_pattern || '',
+          cravings: profile.cravings || '',
+
+          sleep_duration: profile.sleep_duration || '',
+          stress_level: profile.stress_level || '',
+
+          meal_frequency: profile.meal_frequency || '',
+          water_intake: profile.water_intake || '',
+          
+          budget_preference: profile.budget_preference || '',
+          cooking_preference: profile.cooking_preference || '',
         });
         setProfileExists(true);
       }
@@ -68,6 +105,24 @@ const HealthProfile = () => {
         diseases: formData.diseases || null,
         allergies: formData.allergies || null,
         lifestyle: formData.lifestyle || null,
+        activity_level: formData.activity_level || null,
+        goal: formData.goal || null,
+
+        work_type: formData.work_type || null,
+        workout_type: formData.workout_type || null,
+        workout_timing: formData.workout_timing || null,
+
+        hunger_pattern: formData.hunger_pattern || null,
+        cravings: formData.cravings || null,
+
+        sleep_duration: formData.sleep_duration || null,
+        stress_level: formData.stress_level || null,
+
+        meal_frequency: formData.meal_frequency || null,
+        water_intake: formData.water_intake || null,
+
+        budget_preference: formData.budget_preference || null,
+        cooking_preference: formData.cooking_preference || null,
       };
       
       if (profileExists) {
@@ -201,6 +256,152 @@ const HealthProfile = () => {
             value={formData.allergies}
             onChange={handleChange}
           />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+  <div>
+    <label className="text-sm font-medium text-gray-700 mb-1 block">
+      Activity Level
+    </label>
+    <select
+      name="activity_level"
+      value={formData.activity_level}
+      onChange={handleChange}
+      className="px-4 py-2.5 rounded-xl border-2 border-gray-200 w-full"
+    >
+      <option value="">Select</option>
+      <option value="sedentary">Sedentary</option>
+      <option value="lightly_active">Lightly Active</option>
+      <option value="moderately_active">Moderately Active</option>
+      <option value="very_active">Very Active</option>
+      <option value="athlete">Athlete</option>
+    </select>
+  </div>
+
+  <div>
+    <label className="text-sm font-medium text-gray-700 mb-1 block">
+      Goal
+    </label>
+    <select
+      name="goal"
+      value={formData.goal}
+      onChange={handleChange}
+      className="px-4 py-2.5 rounded-xl border-2 border-gray-200 w-full"
+    >
+      <option value="">Select</option>
+      <option value="weight_loss">Weight Loss</option>
+      <option value="weight_gain">Weight Gain</option>
+      <option value="muscle_gain">Muscle Gain</option>
+      <option value="maintain_weight">Maintain Weight</option>
+      <option value="improve_energy">Improve Energy</option>
+    </select>
+  </div>
+
+</div>
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+  <div>
+    <label className="text-sm font-medium text-gray-700 mb-1 block">
+      Work Type
+    </label>
+    <select
+      name="work_type"
+      value={formData.work_type}
+      onChange={handleChange}
+      className="px-4 py-2.5 rounded-xl border-2 border-gray-200 w-full"
+    >
+      <option value="">Select</option>
+      <option value="student">Student</option>
+      <option value="desk_job">Desk Job</option>
+      <option value="field_work">Field Work</option>
+      <option value="shift_work">Shift Work</option>
+    </select>
+  </div>
+
+  <div>
+    <label className="text-sm font-medium text-gray-700 mb-1 block">
+      Workout Type
+    </label>
+    <select
+      name="workout_type"
+      value={formData.workout_type}
+      onChange={handleChange}
+      className="px-4 py-2.5 rounded-xl border-2 border-gray-200 w-full"
+    >
+      <option value="">Select</option>
+      <option value="none">None</option>
+      <option value="walking">Walking</option>
+      <option value="gym">Gym</option>
+      <option value="running">Running</option>
+      <option value="yoga">Yoga</option>
+    </select>
+  </div>
+
+</div>
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+  <div>
+    <label className="text-sm font-medium text-gray-700 mb-1 block">
+      Sleep Duration
+    </label>
+    <select
+      name="sleep_duration"
+      value={formData.sleep_duration}
+      onChange={handleChange}
+      className="px-4 py-2.5 rounded-xl border-2 border-gray-200 w-full"
+    >
+      <option value="">Select</option>
+      <option value="<5">Less than 5 hours</option>
+      <option value="5-6">5-6 hours</option>
+      <option value="6-7">6-7 hours</option>
+      <option value="7-8">7-8 hours</option>
+      <option value="8+">8+ hours</option>
+    </select>
+  </div>
+
+  <div>
+    <label className="text-sm font-medium text-gray-700 mb-1 block">
+      Stress Level
+    </label>
+    <select
+      name="stress_level"
+      value={formData.stress_level}
+      onChange={handleChange}
+      className="px-4 py-2.5 rounded-xl border-2 border-gray-200 w-full"
+    >
+      <option value="">Select</option>
+      <option value="low">Low</option>
+      <option value="medium">Medium</option>
+      <option value="high">High</option>
+      <option value="very_high">Very High</option>
+    </select>
+  </div>
+
+</div>
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+  <Input
+    label="Water Intake"
+    type="text"
+    name="water_intake"
+    placeholder="e.g. 2L"
+    value={formData.water_intake}
+    onChange={handleChange}
+  />
+
+  <Input
+    label="Cravings"
+    type="text"
+    name="cravings"
+    placeholder="Sweet, Salty, Spicy..."
+    value={formData.cravings}
+    onChange={handleChange}
+  />
+
+</div>
 
           <Button
             type="submit"

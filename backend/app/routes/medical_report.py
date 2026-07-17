@@ -35,6 +35,10 @@ async def upload_medical_report(
     if file.filename.lower().endswith(".pdf"):
         extracted_text = extract_text_from_pdf(file_path)
         deficiencies = analyze_deficiencies(extracted_text)
+        
+        print("========== DEFICIENCIES ==========")
+        print(deficiencies)
+        print("==================================")
 
     db_report = MedicalReport(
         user_id=current_user.id,

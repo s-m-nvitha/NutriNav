@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import Card from '../components/Card';
 import { medicalReportService } from '../services/medicalReportService';
 import { deficiencyReportService } from '../services/deficiencyReportService';
+import bodyImage from '../assets/body.jpg';
 const Results = () => {
   const [uploadedReports, setUploadedReports] = useState([]);
   const [deficiencies, setDeficiencies] = useState([]);
   const [recommendations, setRecommendations] = useState({});
   const [profileContext, setProfileContext] = useState("");
   const [aiExplanations, setAiExplanations] = useState([]);
+  const [selectedOrgan, setSelectedOrgan] = useState("Brain");
   const totalReports = uploadedReports.length;
   const totalDeficiencies = deficiencies.length;
 
@@ -22,6 +24,52 @@ const overallStatus =
   40
 );
 
+const organData = {
+  Brain: {
+    nutrients: ["Vitamin B12", "Iron"],
+    symptoms: [
+      "Brain fog",
+      "Poor concentration",
+      "Fatigue"
+    ]
+  },
+
+  Blood: {
+    nutrients: ["Iron"],
+    symptoms: [
+      "Dizziness",
+      "Pale skin",
+      "Low energy"
+    ]
+  },
+
+  Bones: {
+    nutrients: ["Vitamin D"],
+    symptoms: [
+      "Bone pain",
+      "Weak bones",
+      "Fatigue"
+    ]
+  },
+
+  Muscles: {
+    nutrients: ["Vitamin D"],
+    symptoms: [
+      "Muscle weakness",
+      "Low stamina",
+      "Fatigue"
+    ]
+  },
+
+  "Nervous System": {
+    nutrients: ["Vitamin B12"],
+    symptoms: [
+      "Numbness",
+      "Tingling",
+      "Nerve weakness"
+    ]
+  }
+};
 const getSeverityColor = (severity) => {
   switch (severity?.toLowerCase()) {
     case "mild":
@@ -260,48 +308,194 @@ const loadRecommendations = async () => {
 </Card>
       </div>
 
-      <Card>
-        <h3 className="text-xl font-bold text-gray-800 mb-4">Body Mapping Insights</h3>
-        <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl p-6">
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            <div className="bg-white rounded-xl p-4 text-center">
-              <div className="text-3xl mb-2">🧠</div>
-              <h4 className="font-semibold text-gray-800">Brain</h4>
-              <p className="text-sm text-gray-600 mt-1">Omega-3 fatty acids support cognitive function</p>
-            </div>
-            
-            <div className="bg-white rounded-xl p-4 text-center">
-              <div className="text-3xl mb-2">👁️</div>
-              <h4 className="font-semibold text-gray-800">Eyes</h4>
-              <p className="text-sm text-gray-600 mt-1">Vitamin A and lutein for vision health</p>
-            </div>
-            
-            <div className="bg-white rounded-xl p-4 text-center">
-              <div className="text-3xl mb-2">🦴</div>
-              <h4 className="font-semibold text-gray-800">Bones</h4>
-              <p className="text-sm text-gray-600 mt-1">Calcium and Vitamin D for strength</p>
-            </div>
-            
-            <div className="bg-white rounded-xl p-4 text-center">
-              <div className="text-3xl mb-2">🩸</div>
-              <h4 className="font-semibold text-gray-800">Blood</h4>
-              <p className="text-sm text-gray-600 mt-1">Iron and B12 for healthy blood cells</p>
-            </div>
-            
-            <div className="bg-white rounded-xl p-4 text-center">
-              <div className="text-3xl mb-2">💪</div>
-              <h4 className="font-semibold text-gray-800">Muscles</h4>
-              <p className="text-sm text-gray-600 mt-1">Protein for muscle repair and growth</p>
-            </div>
-            
-            <div className="bg-white rounded-xl p-4 text-center">
-              <div className="text-3xl mb-2">❤️</div>
-              <h4 className="font-semibold text-gray-800">Heart</h4>
-              <p className="text-sm text-gray-600 mt-1">CoQ10 and antioxidants for heart health</p>
-            </div>
+<Card>
+  <h3 className="text-xl font-bold text-gray-800 mb-4">
+    Interactive Body Explorer
+  </h3>
+
+  <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl p-6">
+
+    <p className="text-gray-600 mb-6">
+      Body areas potentially affected by your detected deficiencies
+    </p>
+
+    <div className="flex justify-center">
+
+      <div className="relative">
+
+        <img
+          src={bodyImage}
+          alt="Human Body"
+          className="w-[350px] md:w-[450px]"
+        />
+
+        {/* Brain */}
+
+        {(deficiencies.some(
+          d =>
+            d.nutrient_name === "Vitamin B12" ||
+            d.nutrient_name === "Iron"
+        )) && (
+          <div className="absolute top-[12%] left-[48%] -translate-x-1/2">
+            <div className="w-6 h-6 bg-red-500 rounded-full animate-pulse"></div>
           </div>
+        )}
+
+        {/* Nervous System */}
+
+        {(deficiencies.some(
+          d => d.nutrient_name === "Vitamin B12"
+        )) && (
+          <div className="absolute top-[28%] left-[48%] -translate-x-1/2">
+            <div className="w-6 h-6 bg-red-500 rounded-full animate-pulse"></div>
+          </div>
+        )}
+
+        {/* Blood */}
+
+        {(deficiencies.some(
+          d => d.nutrient_name === "Iron"
+        )) && (
+          <div className="absolute top-[40%] left-[48%] -translate-x-1/2">
+            <div className="w-6 h-6 bg-red-500 rounded-full animate-pulse"></div>
+          </div>
+        )}
+
+        {/* Bones */}
+
+        {(deficiencies.some(
+          d => d.nutrient_name === "Vitamin D"
+        )) && (
+          <div className="absolute top-[55%] left-[48%] -translate-x-1/2">
+            <div className="w-6 h-6 bg-red-500 rounded-full animate-pulse"></div>
+          </div>
+        )}
+
+        {/* Muscles */}
+
+        {(deficiencies.some(
+          d => d.nutrient_name === "Vitamin D"
+        )) && (
+          <div className="absolute top-[72%] left-[48%] -translate-x-1/2">
+            <div className="w-6 h-6 bg-red-500 rounded-full animate-pulse"></div>
+          </div>
+        )}
+
+      </div>
+
+    </div>
+
+    <div className="mt-6 grid grid-cols-2 md:grid-cols-3 gap-3">
+
+      <div
+        onClick={() => setSelectedOrgan("Brain")}
+        className={`rounded-xl p-3 text-center cursor-pointer hover:bg-blue-50 ${
+          selectedOrgan === "Brain"
+            ? "bg-blue-100 border-2 border-blue-500"
+            : "bg-white"
+        }`} 
+      >
+        🧠 Brain
+      </div>
+    
+      <div
+        onClick={() => setSelectedOrgan("Nervous System")}
+        className={`rounded-xl p-3 text-center cursor-pointer hover:bg-blue-50 ${
+          selectedOrgan === "Nervous System"
+            ? "bg-blue-100 border-2 border-blue-500"
+            : "bg-white"
+        }`}
+      >
+          ⚡ Nervous System
+      </div>
+
+      <div
+        onClick={() => setSelectedOrgan("Blood")}
+        className={`rounded-xl p-3 text-center cursor-pointer hover:bg-blue-50 ${
+          selectedOrgan === "Blood"
+            ? "bg-blue-100 border-2 border-blue-500"
+            : "bg-white"
+        }`}
+      >
+          🩸 Blood
+      </div>
+
+      <div
+        onClick={() => setSelectedOrgan("Bones")}
+        className={`rounded-xl p-3 text-center cursor-pointer hover:bg-blue-50 ${
+          selectedOrgan === "Bones"
+            ? "bg-blue-100 border-2 border-blue-500"
+            : "bg-white"
+        }`}
+      >
+          🦴 Bones
+      </div>
+      <div
+        onClick={() => setSelectedOrgan("Muscles")}
+        className={`rounded-xl p-3 text-center cursor-pointer hover:bg-blue-50 ${
+          selectedOrgan === "Muscles"
+            ? "bg-blue-100 border-2 border-blue-500"
+            : "bg-white"
+        }`}
+      >
+          💪 Muscles
+      </div>
+    </div>
+
+  </div>
+
+  {selectedOrgan && organData[selectedOrgan] && (
+    <div className="mt-6 bg-white rounded-xl p-6 border shadow">
+
+      <h3 className="text-2xl font-bold mb-4">
+        {selectedOrgan}
+      </h3>
+
+    <div className="mb-4">
+      <h4 className="font-semibold mb-2">
+        Affected Nutrients
+      </h4>
+
+      <ul className="list-disc ml-6">
+        {organData[selectedOrgan].nutrients.map((nutrient) => (
+          <li key={nutrient}>
+            {nutrient}
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div className="mb-4">
+      <h4 className="font-semibold mb-2">
+        Possible Symptoms
+      </h4>
+
+      <ul className="list-disc ml-6">
+        {organData[selectedOrgan].symptoms.map((symptom) => (
+          <li key={symptom}>
+            {symptom}
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <h4 className="font-semibold mb-2">
+        Recommended Foods
+      </h4>
+
+      {organData[selectedOrgan].nutrients.map((nutrient) => (
+        <div key={nutrient} className="mb-2">
+          <strong>{nutrient}:</strong>{" "}
+          {recommendations[nutrient]?.join(", ") ||
+            "No foods available"}
         </div>
-      </Card>
+      ))}
+    </div>
+
+  </div>
+)}
+</Card>
 
       <Card>
         <h3 className="text-xl font-bold text-gray-800 mb-4">Uploaded Report History</h3>
