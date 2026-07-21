@@ -14,7 +14,7 @@ from .routes import (
 )
 
 from .routes import meal_plans
-
+from .routes import progress
 
 Base.metadata.create_all(bind=engine)
 
@@ -43,6 +43,7 @@ app.include_router(medical_report_router)
 app.include_router(deficiency_report_router)
 app.include_router(meal_plans.router)
 app.include_router(chat.router)
+app.include_router(progress.router)
 
 
 @app.get("/")

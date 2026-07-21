@@ -66,7 +66,13 @@ const Sidebar = ({
       name: 'AI Assistant',
       path: '/chat',
       icon: null
+    },
+    {
+      name: 'Progress',
+      path: '/progress',
+      icon: null
     }
+
 
   ];
 
@@ -215,7 +221,15 @@ const Sidebar = ({
                 (
 
                   <span className="text-xl">
-                    {item.name === "AI Assistant" ? "🤖" : "🍽️"}
+                    {
+                      item.name === "AI Assistant"
+                        ? "🤖"
+                        : item.name === "Meal Planner"
+                        ? "🍽️"
+                        : item.name === "Progress"
+                        ? "📈"
+                        : "📄"
+                    }
                   </span>
 
                 )

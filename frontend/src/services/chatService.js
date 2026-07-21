@@ -8,4 +8,9 @@ export const chatService = {
 
     return response.data;
   },
+
+  async getHistory() {
+    const response = await api.get("/chat/history");
+    return response.data;
+  },
 };

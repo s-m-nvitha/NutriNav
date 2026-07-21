@@ -13,7 +13,7 @@ import FoodGuidance from '../pages/FoodGuidance';
 import BodyExplorer from '../pages/BodyExplorer';
 import MealPlanner from '../pages/MealPlanner';
 import Chat from '../pages/Chat';
-
+import Progress from "../pages/Progress";
 
 
 const ProtectedRoute = ({ children }) => {
@@ -79,6 +79,10 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       >
+      <Route
+        path="progress"
+        element={<Progress />}
+      />
         <Route index element={<Navigate to="/dashboard" replace />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="health-profile" element={<HealthProfile />} />

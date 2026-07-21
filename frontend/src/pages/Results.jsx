@@ -3,7 +3,10 @@ import Card from '../components/Card';
 import { medicalReportService } from '../services/medicalReportService';
 import { deficiencyReportService } from '../services/deficiencyReportService';
 import bodyImage from '../assets/body.jpg';
+import { useNavigate } from "react-router-dom";
+
 const Results = () => {
+  const navigate = useNavigate();
   const [uploadedReports, setUploadedReports] = useState([]);
   const [deficiencies, setDeficiencies] = useState([]);
   const [recommendations, setRecommendations] = useState({});
@@ -523,6 +526,24 @@ const loadRecommendations = async () => {
           </div>
         )}
       </Card>
+      <Card>
+
+  <div className="text-center">
+
+    <h3 className="text-xl font-bold mb-4">
+      Need more guidance?
+    </h3>
+
+    <button
+      onClick={() => navigate("/chat")}
+      className="bg-blue-600 text-white px-6 py-3 rounded-xl"
+    >
+      Ask AI Assistant
+    </button>
+
+  </div>
+
+</Card>
     </div>
   );
 };

@@ -2,8 +2,10 @@ import React, { useState, useCallback } from 'react';
 import Card from '../components/Card';
 import Button from '../components/Button';
 import { medicalReportService } from '../services/medicalReportService';
+import { useNavigate } from "react-router-dom";
 
 const MedicalReports = () => {
+  const navigate = useNavigate();
   const [dragActive, setDragActive] = useState(false);
   const [files, setFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
@@ -54,6 +56,7 @@ const MedicalReports = () => {
     
     try {
       const response = await medicalReportService.upload(fileObj.file);
+      navigate("/results");
       setFiles(prev => prev.map(f => 
         f.id === fileObj.id ? { ...f, status: 'uploaded', ...response } : f
       ));

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Card from "../components/Card";
 import { mealPlanService } from "../services/mealPlanService";
+import { useNavigate } from "react-router-dom";
 
 
 const MealPlanner = () => {
-
+  const navigate = useNavigate();
   const [mealPlan, setMealPlan] = useState({});
   const [loading, setLoading] = useState(true);
 
@@ -132,7 +133,14 @@ const MealPlanner = () => {
 
           )
         )}
-
+<div className="mt-8 text-center">
+  <button
+    onClick={() => navigate("/progress")}
+    className="bg-purple-600 text-white px-6 py-3 rounded-xl hover:bg-purple-700"
+  >
+    View Health Progress
+  </button>
+</div>
 
       </div>
 

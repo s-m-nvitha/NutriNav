@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
 import aiAssistantIcon from '../assets/ai_health_assistant.png';
 import deficiencyIcon from '../assets/deficiency_analysis.png';
@@ -9,6 +10,7 @@ import Button from '../components/Button';
 import { healthProfileService } from '../services/healthProfileService';
 import { deficiencyReportService } from '../services/deficiencyReportService';
 const Dashboard = () => {
+  const navigate = useNavigate();
   console.log("Dashboard component loaded");
   const [completion, setCompletion] = useState(0);
   const [recommendations, setRecommendations] = useState({});
@@ -155,15 +157,37 @@ useEffect(() => {
           </div>
           
           <div className="bg-gray-50 rounded-xl p-4 hover:shadow-md transition-shadow">
-            <h4 className="font-semibold text-gray-800 mb-2">AI Chat</h4>
-            <p className="text-sm text-gray-500">Coming Soon</p>
-          </div>
+  <h4 className="font-semibold text-gray-800 mb-2">
+    AI Assistant
+  </h4>
+
+  <p className="text-sm text-gray-500 mb-3">
+    Ask questions about deficiencies,
+    foods, reports and meal plans.
+  </p>
+
+  <Link to="/chat">
+    <Button variant="primary" size="sm">
+      Open Assistant
+    </Button>
+  </Link>
+</div>
           
           <div className="bg-gray-50 rounded-xl p-4 hover:shadow-md transition-shadow">
             <h4 className="font-semibold text-gray-800 mb-2">Analysis Status</h4>
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-yellow-400 rounded-full animate-pulse"></div>
-              <span className="text-sm text-gray-600">Waiting for data</span>
+              <div
+  className={`w-3 h-3 rounded-full animate-pulse ${
+    deficiencies.length > 0
+      ? "bg-green-500"
+      : "bg-yellow-400"
+  }`}
+/>
+              <span className="text-sm text-gray-600">
+  {deficiencies.length > 0
+    ? "Analysis Complete"
+    : "Waiting for data"}
+</span>
             </div>
           </div>
         </div>
@@ -339,26 +363,45 @@ Complete profile for recommendations
       {/* Quick Actions */}
       <Card>
         <h3 className="text-lg font-bold text-gray-800 mb-4">Quick Actions</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Link to="/health-profile">
-            <Button variant="secondary" size="md" className="w-full">
-              Update Profile
-            </Button>
-          </Link>
-          <Link to="/medical-reports">
-            <Button variant="secondary" size="md" className="w-full">
-              Upload Report
-            </Button>
-          </Link>
-          <Link to="/results">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+
+  <Link to="/medical-reports">
   <Button variant="secondary" size="md" className="w-full">
-    View Results
+    📄 Upload Report
   </Button>
 </Link>
-          <Button variant="ghost" size="md" className="w-full">
-            Coming Soon
-          </Button>
-        </div>
+
+<Link to="/results">
+  <Button variant="secondary" size="md" className="w-full">
+    📊 Results
+  </Button>
+</Link>
+
+<Link to="/chat">
+  <Button variant="secondary" size="md" className="w-full">
+    🤖 Ask AI
+  </Button>
+</Link>
+
+<Link to="/results/food-guidance">
+  <Button variant="secondary" size="md" className="w-full">
+    🍎 Food Guidance
+  </Button>
+</Link>
+
+<Link to="/meal-planner">
+  <Button variant="secondary" size="md" className="w-full">
+    🍽️ Meal Planner
+  </Button>
+</Link>
+
+<Link to="/progress">
+  <Button variant="secondary" size="md" className="w-full">
+    📈 Progress
+  </Button>
+</Link>
+
+</div>
       </Card>
     </div>
   );

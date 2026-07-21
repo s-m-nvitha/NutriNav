@@ -19,6 +19,33 @@ def save_chat_message(
 
     return chat
 
+def get_chat_history(
+    db: Session,
+    user_id: int,
+    limit: int = 10
+):
+    chats = (
+        db.query(ChatMessage)
+        .filter(ChatMessage.user_id == user_id)
+        .order_by(ChatMessage.created_at.desc())
+        .limit(limit)
+        .all()
+    )
+
+    chats.reverse()
+
+    history = []
+
+    for chat in chats:
+        history.append(
+            {
+                "user": chat.message,
+                "assistant": chat.response
+            }
+        )
+
+    return history
+
 
 def generate_chat_response(
     message,
