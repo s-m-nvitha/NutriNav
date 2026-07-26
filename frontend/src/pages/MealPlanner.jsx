@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 const MealPlanner = () => {
   const navigate = useNavigate();
   const [mealPlan, setMealPlan] = useState({});
+  const [personalization, setPersonalization] = useState([]);
   const [loading, setLoading] = useState(true);
 
 
@@ -22,6 +23,7 @@ const MealPlanner = () => {
       const data = await mealPlanService.getMealPlan();
 
       setMealPlan(data.meal_plan || {});
+      setPersonalization(data.personalization || []);
 
     } catch (error) {
 
@@ -78,6 +80,20 @@ const MealPlanner = () => {
           <li>Allergies</li>
 
         </ul>
+        <div className="flex flex-wrap gap-2 mt-4">
+
+{
+personalization.map((item)=>(
+<span
+key={item}
+className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm"
+>
+✓ {item}
+</span>
+))
+}
+
+</div>
 
 
       </Card>

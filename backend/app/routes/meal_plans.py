@@ -46,6 +46,38 @@ def generate_meal_plan(
     )
 
 
+    personalization = []
+
+
+    # Add deficiencies
+    for deficiency in deficiencies:
+        personalization.append(
+            deficiency.nutrient_name + " deficiency"
+        )
+
+
+    # Add profile details
+    if profile:
+
+        if profile.dietary_preference:
+            personalization.append(
+                profile.dietary_preference
+            )
+
+
+        if profile.diseases:
+            personalization.append(
+                profile.diseases
+            )
+
+
+        if profile.allergies:
+            personalization.append(
+                profile.allergies + " allergy"
+            )
+
+
     return {
+        "personalization": personalization,
         "meal_plan": meal_plan
     }

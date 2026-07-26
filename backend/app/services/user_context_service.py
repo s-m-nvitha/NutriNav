@@ -1,10 +1,16 @@
 from sqlalchemy.orm import Session
+from ..services.meal_planner import get_meal_plan
+from .meal_context_service import get_meal_context
 
 from ..models import (
     User,
     HealthProfile,
     DeficiencyReport,
     MedicalReport
+)
+
+from ..services.food_recommender import (
+    get_food_recommendations
 )
 
 
@@ -37,6 +43,12 @@ def get_user_context(
         .all()
     )
 
+    food_recommendations = {}
+
+    meal_plan = get_meal_context(
+        deficiencies,
+        health_profile
+    )
 
     context = {
         "user": {
@@ -45,12 +57,12 @@ def get_user_context(
         },
 
         "health_profile": None,
-
         "deficiencies": [],
+        "medical_reports": [],
 
-        "medical_reports": []
+        "food_recommendations": food_recommendations,
+        "meal_plan": meal_plan
     }
-
 
     if health_profile:
         context["health_profile"] = {
@@ -74,6 +86,19 @@ def get_user_context(
             "activity_level":
                 health_profile.activity_level
         }
+        food_recommendations = get_food_recommendations(
+            deficiencies,
+            health_profile
+        )
+
+        meal_plan = get_meal_plan(
+            deficiencies,
+            health_profile
+        )
+
+        context["food_recommendations"] = food_recommendations
+        context["meal_plan"] = meal_plan
+  
 
 
     for item in deficiencies:

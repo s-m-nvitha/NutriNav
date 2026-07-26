@@ -1,9 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
-import aiAssistantIcon from '../assets/ai_health_assistant.png';
-import deficiencyIcon from '../assets/deficiency_analysis.png';
-import foodGuidanceIcon from '../assets/food_guidance.png';
-import bodyExplorerIcon from '../assets/body_explorer.png';
 import { Link } from 'react-router-dom';
 import Card from '../components/Card';
 import Button from '../components/Button';
@@ -134,11 +130,10 @@ useEffect(() => {
             <h3 className="text-2xl font-bold text-gray-800">AI Health Assistant</h3>
             <p className="text-gray-600 mt-1">Your personal AI-powered health companion</p>
           </div>
-          <img
-  src={aiAssistantIcon}
-  alt="AI Health Assistant"
-  className="w-12 h-12 object-contain"
-/>
+          <div className="text-5xl">
+            🤖
+          </div>
+
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -203,11 +198,10 @@ useEffect(() => {
                 <h3 className="text-lg font-bold text-gray-800">Deficiency Analysis</h3>
                 <p className="text-gray-500 text-sm mt-1">Track nutrient levels</p>
               </div>
-              <img
-  src={deficiencyIcon}
-  alt="Deficiency Analysis"
-  className="w-12 h-12 object-contain"
-/>
+              <div className="text-5xl">
+                🩸
+              </div>
+
             </div>
             
             <div className="space-y-2 mb-4">
@@ -259,11 +253,10 @@ useEffect(() => {
                 <h3 className="text-lg font-bold text-gray-800">Food Guidance</h3>
                 <p className="text-gray-500 text-sm mt-1">Personalized recommendations</p>
               </div>
-              <img
-  src={foodGuidanceIcon}
-  alt="Food Guidance"
-  className="w-12 h-12 object-contain"
-/>
+              <div className="text-5xl">
+                🥗
+              </div>
+
             </div>
             
           
@@ -329,11 +322,10 @@ Complete profile for recommendations
                 <h3 className="text-lg font-bold text-gray-800">Body Explorer</h3>
                 <p className="text-gray-500 text-sm mt-1">Nutrient relationships</p>
               </div>
-              <img
-  src={bodyExplorerIcon}
-  alt="Body Explorer" 
-  className="w-12 h-12 object-contain"
-/>
+              <div className="text-5xl">
+                🧍
+              </div>
+
             </div>
             
             <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-lg p-4 mb-4">

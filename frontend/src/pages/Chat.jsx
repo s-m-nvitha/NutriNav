@@ -79,13 +79,60 @@ function Chat() {
     setMessage("");
   };
 
+  const sendSuggestedQuestion = async (question) => {
+  try {
+    setLoading(true);
+
+    const response =
+      await chatService.sendMessage(question);
+
+    setMessages((prev) => [
+      ...prev,
+      { sender: "user", text: question },
+      { sender: "ai", text: response.response }
+    ]);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    setLoading(false);
+  }
+};
+
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">
         NutriNav AI Assistant
       </h1>
 
-      <div className="border rounded p-4 h-[500px] overflow-y-auto">
+      <div className="bg-gradient-to-r from-green-500 to-blue-500 text-white p-4 rounded-xl mb-4">
+  <h2 className="font-bold text-lg">
+    Your Personal Nutrition Assistant
+  </h2>
+
+  <p className="text-sm opacity-90">
+    Ask about deficiencies, symptoms, foods,
+    meal plans, supplements and nutrition.
+  </p>
+</div>
+
+      <div className="flex flex-wrap gap-2 mb-4">
+  {[
+    "Why am I tired?",
+    "Explain my deficiencies",
+    "What foods should I eat?",
+    "Create a meal plan",
+  ].map((question) => (
+    <button
+  key={question}
+  onClick={() => sendSuggestedQuestion(question)}
+  className="bg-blue-50 text-blue-700 px-3 py-2 rounded-xl hover:bg-blue-100"
+>
+  {question}
+</button>
+  ))}
+</div>
+
+      <div className="border rounded-xl p-4 h-[500px] overflow-y-auto bg-white shadow-sm">
         {messages.map((msg, index) => (
   <div
     key={index}
@@ -122,7 +169,7 @@ function Chat() {
                 NutriNav
               </p>
 
-              <p>Thinking...</p>
+              <p>🧠 Analyzing your health profile...</p>
             </div>
           </div>
         )}
@@ -131,7 +178,7 @@ function Chat() {
 
       <div className="flex gap-2 mt-4">
         <input
-          className="border p-2 flex-1"
+          className="border rounded-xl p-3 flex-1 focus:outline-none focus:ring-2 focus:ring-green-500"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={(e) => {

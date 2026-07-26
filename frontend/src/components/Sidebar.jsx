@@ -2,10 +2,6 @@ import React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import sidebarLogo from '../assets/sidebar-logo.png';
 import sidebarBg from '../assets/sidebar-bg.png';
-import dashboardIcon from '../assets/dashboard.png';
-import healthIcon from '../assets/health_profile.png';
-import reportsIcon from '../assets/reports.png';
-import resultsIcon from '../assets/results.png';
 
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
@@ -32,49 +28,49 @@ const Sidebar = ({
 
   const menuItems = [
 
-    { 
-      name: 'Dashboard',
-      path: '/dashboard',
-      icon: dashboardIcon
-    },
+  { 
+    name: 'Dashboard',
+    path: '/dashboard',
+    icon: '🏠'
+  },
 
-    { 
-      name: 'Health Profile',
-      path: '/health-profile',
-      icon: healthIcon
-    },
+  { 
+    name: 'Health Profile',
+    path: '/health-profile',
+    icon: '🧑‍⚕️'
+  },
 
-    { 
-      name: 'Medical Reports',
-      path: '/medical-reports',
-      icon: reportsIcon
-    },
+  { 
+    name: 'Medical Reports',
+    path: '/medical-reports',
+    icon: '📄'
+  },
 
-    { 
-      name: 'Results',
-      path: '/results',
-      icon: resultsIcon
-    },
+  { 
+    name: 'Results',
+    path: '/results',
+    icon: '📊'
+  },
 
-    { 
-      name: 'Meal Planner',
-      path: '/meal-planner',
-      icon: null
-    },
+  { 
+    name: 'Meal Planner',
+    path: '/meal-planner',
+    icon: '🍽️'
+  },
     
-    {
-      name: 'AI Assistant',
-      path: '/chat',
-      icon: null
-    },
-    {
-      name: 'Progress',
-      path: '/progress',
-      icon: null
-    }
+  {
+    name: 'AI Assistant',
+    path: '/chat',
+    icon: '🤖'
+  },
 
+  {
+    name: 'Progress',
+    path: '/progress',
+    icon: '📈'
+  }
 
-  ];
+];
 
 
   const isActive = (path) => location.pathname === path;
@@ -201,40 +197,10 @@ const Sidebar = ({
             >
 
 
-              {
-                item.icon ? (
-
-                  <img
-
-                    src={item.icon}
-
-                    alt={item.name}
-
-                    className="w-6 h-6 object-contain"
-
-                  />
-
-                )
-
-                :
-
-                (
-
-                  <span className="text-xl">
-                    {
-                      item.name === "AI Assistant"
-                        ? "🤖"
-                        : item.name === "Meal Planner"
-                        ? "🍽️"
-                        : item.name === "Progress"
-                        ? "📈"
-                        : "📄"
-                    }
-                  </span>
-
-                )
-
-              }
+              
+                <span className="text-xl">
+                  {item.icon}
+                </span>
 
 
 
@@ -289,11 +255,12 @@ const Sidebar = ({
 
             {isCollapsed && (
 
-              <span>
-                ↩
+              <span className="text-xl">
+                🚪
               </span>
 
             )}
+
 
 
           </button>

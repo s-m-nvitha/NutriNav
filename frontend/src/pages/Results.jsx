@@ -4,6 +4,7 @@ import { medicalReportService } from '../services/medicalReportService';
 import { deficiencyReportService } from '../services/deficiencyReportService';
 import bodyImage from '../assets/body.jpg';
 import { useNavigate } from "react-router-dom";
+import BodyExplorer from "../components/BodyExplorer";
 
 const Results = () => {
   const navigate = useNavigate();
@@ -15,6 +16,26 @@ const Results = () => {
   const [selectedOrgan, setSelectedOrgan] = useState("Brain");
   const totalReports = uploadedReports.length;
   const totalDeficiencies = deficiencies.length;
+  const [organInfo, setOrganInfo] = useState(null);
+
+  const fetchOrganInfo = async (organ) => {
+
+  try {
+
+    const response = await fetch(
+      `http://127.0.0.1:8000/body-explorer/${organ}`
+    );
+
+    const data = await response.json();
+
+    setOrganInfo(data);
+
+  } catch (error) {
+
+    console.error(error);
+
+  }
+};
 
 const overallStatus =
   deficiencies.length === 0
@@ -45,6 +66,15 @@ const organData = {
       "Low energy"
     ]
   },
+
+  "Digestive System": {
+  nutrients: ["Iron"],
+  symptoms: [
+    "Poor nutrient absorption",
+    "Digestive discomfort",
+    "Low energy"
+  ]
+},
 
   Bones: {
     nutrients: ["Vitamin D"],
@@ -92,6 +122,7 @@ const getSeverityColor = (severity) => {
   loadReports();
   loadDeficiencies();
   loadRecommendations();
+  fetchOrganInfo("brain");
 }, []);
 
   const loadReports = async () => {
@@ -329,7 +360,7 @@ const loadRecommendations = async () => {
         <img
           src={bodyImage}
           alt="Human Body"
-          className="w-[350px] md:w-[450px]"
+          className="w-[380px] md:w-[480px]"
         />
 
         {/* Brain */}
@@ -339,8 +370,19 @@ const loadRecommendations = async () => {
             d.nutrient_name === "Vitamin B12" ||
             d.nutrient_name === "Iron"
         )) && (
-          <div className="absolute top-[12%] left-[48%] -translate-x-1/2">
-            <div className="w-6 h-6 bg-red-500 rounded-full animate-pulse"></div>
+          <div className="absolute top-[6%] left-[50%] -translate-x-1/2">
+            <button
+  onClick={() => {
+    setSelectedOrgan("Brain");
+    fetchOrganInfo("brain");
+  }}
+  className="w-6 h-6 bg-blue-500 ring-4 ring-blue-200 rounded-full animate-pulse shadow-lg hover:scale-125 transition-all border-2 border-white"
+></button>
+<div className="absolute top-[12%] left-[58%]">
+  <span className="bg-white px-2 py-1 rounded-lg shadow text-xs">
+    Brain
+  </span>
+</div>
           </div>
         )}
 
@@ -349,8 +391,14 @@ const loadRecommendations = async () => {
         {(deficiencies.some(
           d => d.nutrient_name === "Vitamin B12"
         )) && (
-          <div className="absolute top-[28%] left-[48%] -translate-x-1/2">
-            <div className="w-6 h-6 bg-red-500 rounded-full animate-pulse"></div>
+          <div className="absolute top-[22%] left-[50%] -translate-x-1/2">
+            <button
+  onClick={() => {
+    setSelectedOrgan("Nervous System");
+    fetchOrganInfo("nervous-system");
+  }}
+  className="w-6 h-6 bg-purple-500 rounded-full animate-pulse shadow-lg hover:scale-125 transition-all border-2 border-white"
+></button>
           </div>
         )}
 
@@ -359,18 +407,64 @@ const loadRecommendations = async () => {
         {(deficiencies.some(
           d => d.nutrient_name === "Iron"
         )) && (
-          <div className="absolute top-[40%] left-[48%] -translate-x-1/2">
-            <div className="w-6 h-6 bg-red-500 rounded-full animate-pulse"></div>
+          <div className="absolute top-[45%] left-[38%] -translate-x-1/2">
+            <button
+  onClick={() => {
+    setSelectedOrgan("Blood");
+    fetchOrganInfo("blood");
+  }}
+  className="w-6 h-6 bg-red-500 rounded-full animate-pulse shadow-lg hover:scale-125 transition-all border-2 border-white"
+></button>
+<div className="absolute top-[40%] left-[58%]">
+  <span className="bg-white px-2 py-1 rounded-lg shadow text-xs">
+    Blood
+  </span>
+</div>
           </div>
         )}
+
+        {/* Digestive System */}
+
+{(deficiencies.some(
+  d => d.nutrient_name === "Iron"
+)) && (
+  <div className="absolute top-[42%] left-[50%] -translate-x-1/2">
+
+    <button
+      onClick={() => {
+        setSelectedOrgan("Digestive System");
+        fetchOrganInfo("digestive-system");
+      }}
+      className="w-6 h-6 bg-orange-500 rounded-full animate-pulse shadow-lg hover:scale-125 transition-all border-2 border-white"
+    ></button>
+
+    <div className="absolute top-[0%] left-[120%]">
+      <span className="bg-white px-2 py-1 rounded-lg shadow text-xs">
+        Digestive
+      </span>
+    </div>
+
+  </div>
+)}
 
         {/* Bones */}
 
         {(deficiencies.some(
           d => d.nutrient_name === "Vitamin D"
         )) && (
-          <div className="absolute top-[55%] left-[48%] -translate-x-1/2">
-            <div className="w-6 h-6 bg-red-500 rounded-full animate-pulse"></div>
+          <div className="absolute top-[72%] left-[48%] -translate-x-1/2">
+            <button
+  onClick={() => {
+    setSelectedOrgan("Bones");
+    fetchOrganInfo("bones");
+  }}
+  className="w-6 h-6 bg-yellow-500 rounded-full animate-pulse shadow-lg hover:scale-125 transition-all border-2 border-white"
+></button>
+<div className="absolute top-[58%] left-[58%]">
+  <span className="bg-white px-2 py-1 rounded-lg shadow text-xs">
+    Bones
+  </span>
+</div>
           </div>
         )}
 
@@ -379,8 +473,14 @@ const loadRecommendations = async () => {
         {(deficiencies.some(
           d => d.nutrient_name === "Vitamin D"
         )) && (
-          <div className="absolute top-[72%] left-[48%] -translate-x-1/2">
-            <div className="w-6 h-6 bg-red-500 rounded-full animate-pulse"></div>
+          <div className="absolute top-[65%] left-[58%] -translate-x-1/2">
+            <button
+  onClick={() => {
+    setSelectedOrgan("Muscles");
+    fetchOrganInfo("muscles");
+  }}
+  className="w-6 h-6 bg-green-500 rounded-full animate-pulse shadow-lg hover:scale-125 transition-all border-2 border-white"
+></button>
           </div>
         )}
 
@@ -391,7 +491,13 @@ const loadRecommendations = async () => {
     <div className="mt-6 grid grid-cols-2 md:grid-cols-3 gap-3">
 
       <div
-        onClick={() => setSelectedOrgan("Brain")}
+        onClick={() => {
+
+  setSelectedOrgan("Brain");
+
+  fetchOrganInfo("brain");
+
+}}
         className={`rounded-xl p-3 text-center cursor-pointer hover:bg-blue-50 ${
           selectedOrgan === "Brain"
             ? "bg-blue-100 border-2 border-blue-500"
@@ -402,7 +508,13 @@ const loadRecommendations = async () => {
       </div>
     
       <div
-        onClick={() => setSelectedOrgan("Nervous System")}
+        onClick={() => {
+
+  setSelectedOrgan("Nervous System");
+
+  fetchOrganInfo("nervous-system");
+
+}}
         className={`rounded-xl p-3 text-center cursor-pointer hover:bg-blue-50 ${
           selectedOrgan === "Nervous System"
             ? "bg-blue-100 border-2 border-blue-500"
@@ -413,7 +525,13 @@ const loadRecommendations = async () => {
       </div>
 
       <div
-        onClick={() => setSelectedOrgan("Blood")}
+        onClick={() => {
+
+  setSelectedOrgan("Blood");
+
+  fetchOrganInfo("blood");
+
+}}
         className={`rounded-xl p-3 text-center cursor-pointer hover:bg-blue-50 ${
           selectedOrgan === "Blood"
             ? "bg-blue-100 border-2 border-blue-500"
@@ -424,7 +542,13 @@ const loadRecommendations = async () => {
       </div>
 
       <div
-        onClick={() => setSelectedOrgan("Bones")}
+        onClick={() => {
+
+  setSelectedOrgan("Bones");
+
+  fetchOrganInfo("bones");
+
+}}
         className={`rounded-xl p-3 text-center cursor-pointer hover:bg-blue-50 ${
           selectedOrgan === "Bones"
             ? "bg-blue-100 border-2 border-blue-500"
@@ -434,7 +558,13 @@ const loadRecommendations = async () => {
           🦴 Bones
       </div>
       <div
-        onClick={() => setSelectedOrgan("Muscles")}
+        onClick={() => {
+
+  setSelectedOrgan("Muscles");
+
+  fetchOrganInfo("muscles");
+
+}}
         className={`rounded-xl p-3 text-center cursor-pointer hover:bg-blue-50 ${
           selectedOrgan === "Muscles"
             ? "bg-blue-100 border-2 border-blue-500"
@@ -443,11 +573,27 @@ const loadRecommendations = async () => {
       >
           💪 Muscles
       </div>
+      <div
+  onClick={() => {
+
+    setSelectedOrgan("Digestive System");
+
+    fetchOrganInfo("digestive-system");
+
+  }}
+  className={`rounded-xl p-3 text-center cursor-pointer hover:bg-blue-50 ${
+    selectedOrgan === "Digestive System"
+      ? "bg-blue-100 border-2 border-blue-500"
+      : "bg-white"
+  }`}
+>
+  🍽️ Digestive System
+</div>
     </div>
 
   </div>
 
-  {selectedOrgan && organData[selectedOrgan] && (
+  {organInfo && (
     <div className="mt-6 bg-white rounded-xl p-6 border shadow">
 
       <h3 className="text-2xl font-bold mb-4">
@@ -460,11 +606,9 @@ const loadRecommendations = async () => {
       </h4>
 
       <ul className="list-disc ml-6">
-        {organData[selectedOrgan].nutrients.map((nutrient) => (
-          <li key={nutrient}>
-            {nutrient}
-          </li>
-        ))}
+        <li>
+  {organInfo.deficiency}
+</li>
       </ul>
     </div>
 
@@ -474,11 +618,13 @@ const loadRecommendations = async () => {
       </h4>
 
       <ul className="list-disc ml-6">
-        {organData[selectedOrgan].symptoms.map((symptom) => (
-          <li key={symptom}>
-            {symptom}
-          </li>
-        ))}
+        {organInfo.effects.map(effect => (
+
+  <li key={effect}>
+    {effect}
+  </li>
+
+))}
       </ul>
     </div>
 

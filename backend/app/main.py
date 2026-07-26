@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes import chat
 from fastapi.middleware.cors import CORSMiddleware
-
+from app.routes import body_explorer
 
 from .database import engine, Base
 
@@ -44,7 +44,7 @@ app.include_router(deficiency_report_router)
 app.include_router(meal_plans.router)
 app.include_router(chat.router)
 app.include_router(progress.router)
-
+app.include_router(body_explorer.router)
 
 @app.get("/")
 def root():
