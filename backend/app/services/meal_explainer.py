@@ -1,18 +1,22 @@
-def find_food_reason(meal_plan, question):
+def find_food_reason(meal_plan, food_name):
 
-    question_lower = question.lower()
+    food_name = food_name.lower()
 
     for meal_type, foods in meal_plan.items():
 
         for item in foods:
 
-            food_name = item["food"].lower()
+            if item["food"].lower() == food_name:
 
-            if food_name in question_lower:
+                return {
+                    "food": item["food"],
+                    "explanation": (
+                        f"{item['food']} was recommended because "
+                        f"{item['reason']}."
+                    )
+                }
 
-                return (
-                    f"{item['food']} was recommended because "
-                    f"{item['reason']}."
-                )
-
-    return None
+    return {
+        "food": food_name,
+        "explanation": "No explanation found for this food."
+    }

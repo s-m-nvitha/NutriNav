@@ -9,6 +9,8 @@ const MealPlanner = () => {
   const [mealPlan, setMealPlan] = useState({});
   const [personalization, setPersonalization] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [explanation, setExplanation] = useState(null);
+  const [explainingFood, setExplainingFood] = useState(null);
 
 
   useEffect(() => {
@@ -39,6 +41,50 @@ const MealPlanner = () => {
     }
 
   };
+
+  const explainMeal = async (food) => {
+
+  try {
+
+    setExplainingFood(food);
+
+    const response = await fetch(
+      "http://127.0.0.1:8000/meal-plans/explain",
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
+        },
+
+        body: JSON.stringify({
+          food: food
+        })
+      }
+    );
+
+
+    const data = await response.json();
+
+    setExplanation(data);
+
+
+  } catch(error){
+
+    console.log(
+      "Meal explanation error",
+      error
+    );
+
+
+  } finally {
+
+    setExplainingFood(null);
+
+  }
+
+};
 
 
   if (loading) {
@@ -90,7 +136,7 @@ className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm"
 >
 ✓ {item}
 </span>
-))
+))  
 }
 
 </div>
@@ -98,7 +144,31 @@ className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm"
 
       </Card>
 
+{explanation && (
 
+<Card>
+
+<h3 className="text-lg font-bold text-gray-800">
+🤖 Why {explanation.food}?
+</h3>
+
+
+<p className="mt-2 text-gray-600">
+{explanation.explanation}
+</p>
+
+
+<button
+onClick={() => setExplanation(null)}
+className="mt-3 text-sm text-red-500"
+>
+Close
+</button>
+
+
+</Card>
+
+)}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
@@ -134,6 +204,14 @@ className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm"
                       <p className="text-sm text-gray-500 mt-1">
                         {item.reason}
                       </p>
+
+                      <button
+                        onClick={() => explainMeal(item.food)}
+                        className="mt-3 text-sm bg-blue-50 text-blue-700 px-3 py-1 rounded-lg hover:bg-blue-100"
+                      >
+                        🤖 Why this meal?
+                      </button>
+
 
 
                     </div>

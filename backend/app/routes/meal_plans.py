@@ -6,6 +6,8 @@ from ..models import DeficiencyReport, HealthProfile
 from .auth import get_current_user
 
 from app.services.meal_planner import get_meal_plan
+from ..schemas.meal import MealExplainRequest
+from app.services.meal_explainer import find_food_reason
 
 
 router = APIRouter(
@@ -81,3 +83,42 @@ def generate_meal_plan(
         "personalization": personalization,
         "meal_plan": meal_plan
     }
+
+@router.post("/explain")
+def explain_meal(
+    request: MealExplainRequest,
+    current_user=Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+
+    deficiencies = (
+        db.query(DeficiencyReport)
+        .filter(
+            DeficiencyReport.user_id == current_user.id
+        )
+        .all()
+    )
+
+
+    profile = (
+        db.query(HealthProfile)
+        .filter(
+            HealthProfile.user_id == current_user.id
+        )
+        .first()
+    )
+
+
+    meal_plan = get_meal_plan(
+        deficiencies,
+        profile
+    )
+
+
+    explanation = find_food_reason(
+        meal_plan,
+        request.food
+    )
+
+
+    return explanation
