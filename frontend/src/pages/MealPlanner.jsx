@@ -149,14 +149,16 @@ className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm"
 <Card>
 
 <h3 className="text-lg font-bold text-gray-800">
-🤖 Why {explanation.food}?
+🤖 NutriNav Insight
 </h3>
 
+<p className="text-sm text-gray-400 mt-1">
+Powered by AI nutrition analysis
+</p>
 
 <p className="mt-2 text-gray-600">
 {explanation.explanation}
 </p>
-
 
 <button
 onClick={() => setExplanation(null)}
@@ -164,7 +166,6 @@ className="mt-3 text-sm text-red-500"
 >
 Close
 </button>
-
 
 </Card>
 
@@ -206,11 +207,18 @@ Close
                       </p>
 
                       <button
-                        onClick={() => explainMeal(item.food)}
-                        className="mt-3 text-sm bg-blue-50 text-blue-700 px-3 py-1 rounded-lg hover:bg-blue-100"
-                      >
-                        🤖 Why this meal?
-                      </button>
+  onClick={() => explainMeal(item.food)}
+  disabled={explainingFood === item.food}
+  className="mt-3 text-sm bg-blue-50 text-blue-700 px-3 py-1 rounded-lg hover:bg-blue-100 disabled:opacity-50"
+>
+
+{
+  explainingFood === item.food
+    ? "🤖 Analyzing..."
+    : "🤖 Why this meal?"
+}
+
+</button>
 
 
 

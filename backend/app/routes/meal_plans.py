@@ -6,6 +6,7 @@ from ..models import DeficiencyReport, HealthProfile
 from .auth import get_current_user
 
 from app.services.meal_planner import get_meal_plan
+from app.services.meal_explainer_ai import explain_meal_with_ai
 from ..schemas.meal import MealExplainRequest
 from app.services.meal_explainer import find_food_reason
 
@@ -115,10 +116,14 @@ def explain_meal(
     )
 
 
-    explanation = find_food_reason(
-        meal_plan,
-        request.food
-    )
+    explanation = explain_meal_with_ai(
+        request.food,
+        deficiencies,
+        profile
+   )
 
 
-    return explanation
+    return {
+        "food": request.food,
+        "explanation": explanation
+    }
