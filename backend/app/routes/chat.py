@@ -2,11 +2,16 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from ..database import get_db
-from ..models import User
+from ..models import (
+    User,
+    DeficiencyReport,
+    HealthProfile
+)
 from .auth import get_current_user
 
 from ..schemas.chat import ChatRequest
 from ..services.user_context_service import get_user_context
+from ..services.meal_context_service import get_user_meal_context
 from ..services.ai_service import generate_nutrition_response
 from ..services.chat_service import (
     save_chat_message,
@@ -33,6 +38,28 @@ async def chat(
         current_user
     )
 
+    deficiencies = (
+    db.query(DeficiencyReport)
+    .filter(
+        DeficiencyReport.user_id == current_user.id
+    )
+    .all()
+)
+
+    profile = (
+    db.query(HealthProfile)
+    .filter(
+        HealthProfile.user_id == current_user.id
+    )
+    .first()
+)
+
+
+    meal_context = get_user_meal_context(
+        deficiencies,
+        profile
+    )
+
     chat_history = get_chat_history(
         db,
         current_user.id
@@ -40,6 +67,7 @@ async def chat(
 
     ai_response = generate_nutrition_response(
         context,
+        meal_context,
         chat_history,
         request.message
     )

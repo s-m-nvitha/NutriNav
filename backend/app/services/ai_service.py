@@ -14,6 +14,7 @@ client = genai.Client(
 
 def generate_nutrition_response(
     user_context,
+    meal_context,
     chat_history,
     question
 ):
@@ -29,29 +30,47 @@ def generate_nutrition_response(
             f"Assistant: {chat['assistant']}\n\n"
         )
 
+
     # -----------------------------
     # Meal explanation shortcut
     # -----------------------------
-    reason = find_food_reason(
-        user_context.get("meal_plan", {}),
-        question
-    )
 
-    if reason:
-        return reason
+    meal_words = [
+        "breakfast",
+        "lunch",
+        "dinner",
+        "snacks",
+        "meal"
+    ]
+
+
+    if not any(word in question.lower() for word in meal_words):
+
+        reason = find_food_reason(
+            user_context.get("meal_plan", {}),
+            question
+        )
+
+        if reason:
+            return reason
+
 
     # -----------------------------
     # Knowledge Retrieval
     # -----------------------------
+
     knowledge = retrieve_knowledge(question)
+
 
     # -----------------------------
     # Deficiency-Aware Retrieval
     # -----------------------------
+
     deficiencies = user_context.get(
         "deficiencies",
         []
     )
+
 
     for deficiency in deficiencies:
 
@@ -66,23 +85,28 @@ def generate_nutrition_response(
 
             nutrient = str(deficiency)
 
+
         knowledge += retrieve_knowledge(
             nutrient
         )
 
+
     # -----------------------------
     # Fallback Knowledge
     # -----------------------------
+
     if not knowledge:
 
         knowledge = """
-Use your nutrition knowledge.
-Give evidence-based dietary guidance.
-"""
+        Use your nutrition knowledge.
+        Give evidence-based dietary guidance.
+        """
+
 
     # -----------------------------
     # AI Prompt
     # -----------------------------
+
     prompt = f"""
 You are NutriNav AI, a personalized nutrition assistant.
 
@@ -98,11 +122,8 @@ IMPORTANT RULES:
 USER CONTEXT:
 {user_context}
 
-print("\nDEFICIENCIES:")
-print(user_context.get("deficiencies"))
-
-MEAL PLAN:
-{user_context.get("meal_plan")}
+MEAL PLAN CONTEXT:
+{meal_context}
 
 NUTRITION KNOWLEDGE:
 {knowledge}
@@ -113,12 +134,9 @@ IMPORTANT:
 - If user asks what to eat, generate recommendations from meal plans and nutrition knowledge.
 - If user asks for breakfast, lunch, snacks, or dinner, give personalized recommendations.
 - Remember previous conversation context.
-- Personalize answers using deficiencies, diseases, allergies, and dietary preferences.
+- Personalize answers using deficiencies, allergies, diseases, and dietary preferences.
 - Keep recommendations practical and realistic.
-- If user asks for breakfast, lunch, dinner, or snacks,
-  use foods from the meal plan first.
-- Only generate new recommendations when meal plan data
-  is unavailable.
+- If meal plan data is available, use it first.
 
 PREVIOUS CHAT HISTORY:
 {history_text}
@@ -129,9 +147,11 @@ CURRENT USER QUESTION:
 Provide a personalized response.
 """
 
+
     response = client.models.generate_content(
         model="gemini-2.5-flash",
         contents=prompt
     )
+
 
     return response.text

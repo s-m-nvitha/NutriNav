@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
 from ..services.meal_planner import get_meal_plan
-from .meal_context_service import get_meal_context
-
+from .meal_context_service import get_user_meal_context
 from ..models import (
     User,
     HealthProfile,
@@ -45,7 +44,7 @@ def get_user_context(
 
     food_recommendations = {}
 
-    meal_plan = get_meal_context(
+    meal_plan = get_user_meal_context(
         deficiencies,
         health_profile
     )
