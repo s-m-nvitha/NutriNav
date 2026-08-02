@@ -114,25 +114,61 @@ function Chat() {
     meal plans, supplements and nutrition.
   </p>
 </div>
+     <div className="bg-white rounded-xl shadow p-4 mb-4">
+  <h3 className="font-bold text-gray-800">
+    🩺 Your Health Snapshot
+  </h3>
 
-      <div className="flex flex-wrap gap-2 mb-4">
-  {[
-    "Why am I tired?",
-    "Explain my deficiencies",
-    "What foods should I eat?",
-    "Create a meal plan",
-  ].map((question) => (
-    <button
-  key={question}
-  onClick={() => sendSuggestedQuestion(question)}
-  className="bg-blue-50 text-blue-700 px-3 py-2 rounded-xl hover:bg-blue-100"
->
-  {question}
-</button>
-  ))}
+  <ul className="mt-2 text-sm text-gray-600 space-y-1">
+    <li>✓ Iron Deficiency</li>
+    <li>✓ Vegetarian Diet</li>
+    <li>✓ Diabetes</li>
+    <li>✓ Dairy Allergy</li>
+  </ul>
 </div>
 
-      <div className="border rounded-xl p-4 h-[500px] overflow-y-auto bg-white shadow-sm">
+
+
+<div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 mb-4">
+
+  <h3 className="font-bold text-yellow-800">
+    ⚡ Quick Actions
+  </h3>
+
+  <div className="flex flex-wrap gap-2 mt-3 relative z-20">
+
+   {[
+  "Why am I tired?",
+  "Explain my deficiencies",
+  "What foods should I eat?",
+  "Create a meal plan",
+].map((question) => (
+  <button
+    key={question}
+    onClick={() => sendSuggestedQuestion(question)}
+    className="bg-white px-3 py-2 rounded-lg shadow hover:bg-gray-50"
+  >
+    {question}
+  </button>
+))}
+
+  </div>
+
+</div>
+
+      <div className="relative border border-gray-200 rounded-2xl p-6 h-[550px] overflow-y-auto bg-gradient-to-b from-white to-gray-50 shadow-lg">
+        {messages.length === 0 && !loading && (
+  <div className="text-center py-16">
+    <h2 className="text-2xl font-bold text-gray-700">
+      👋 Welcome to NutriNav AI
+    </h2>
+
+    <p className="text-gray-500 mt-3">
+      Ask me about nutrition, deficiencies,
+      meal plans, symptoms, or healthy foods.
+    </p>
+  </div>
+)}
         {messages.map((msg, index) => (
   <div
     key={index}
@@ -146,7 +182,7 @@ function Chat() {
       className={`max-w-[75%] p-4 rounded-2xl shadow ${
         msg.sender === "user"
           ? "bg-green-500 text-white"
-          : "bg-gray-100 text-gray-800"
+          : "bg-white border border-gray-200 text-gray-800"
       }`}
     >
       <p className="font-semibold mb-1">
@@ -169,7 +205,15 @@ function Chat() {
                 NutriNav
               </p>
 
-              <p>🧠 Analyzing your health profile...</p>
+              <div className="flex items-center gap-2">
+  <div className="animate-pulse">
+    🤖
+  </div>
+
+  <p>
+    Thinking about your nutrition...
+  </p>
+</div>
             </div>
           </div>
         )}

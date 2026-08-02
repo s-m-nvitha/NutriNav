@@ -72,6 +72,12 @@ async def chat(
         request.message
     )
 
+    if isinstance(ai_response, dict):
+        ai_response = ai_response.get(
+            "explanation",
+            str(ai_response)
+        )
+       
     save_chat_message(
         db=db,
         user_id=current_user.id,

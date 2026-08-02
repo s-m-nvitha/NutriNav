@@ -14,8 +14,17 @@ const Results = () => {
   const [profileContext, setProfileContext] = useState("");
   const [aiExplanations, setAiExplanations] = useState([]);
   const [selectedOrgan, setSelectedOrgan] = useState("Brain");
-  const totalReports = uploadedReports.length;
-  const totalDeficiencies = deficiencies.length;
+
+const uniqueReports = uploadedReports.filter(
+  (report, index, self) =>
+    index ===
+    self.findIndex(
+      (r) => r.file_name === report.file_name
+    )
+);
+
+const totalReports = uniqueReports.length;
+const totalDeficiencies = deficiencies.length;
   const [organInfo, setOrganInfo] = useState(null);
 
   const fetchOrganInfo = async (organ) => {
@@ -43,10 +52,20 @@ const overallStatus =
     : deficiencies.some((d) => d.severity === "severe")
     ? "Severe"
     : "Moderate";
-    const healthScore = Math.max(
-  100 - deficiencies.length * 15,
-  40
-);
+    let score = 100;
+
+deficiencies.forEach((d) => {
+  if (d.severity?.toLowerCase() === "severe") {
+    score -= 20;
+  } else if (d.severity?.toLowerCase() === "moderate") {
+    score -= 10;
+  } else if (d.severity?.toLowerCase() === "mild") {
+    score -= 5;
+  }
+});
+
+const healthScore = Math.max(score, 40);
+
 
 const organData = {
   Brain: {
@@ -226,7 +245,7 @@ const loadRecommendations = async () => {
         {uploadedReports.length > 0 && (
           <div className="bg-blue-50 rounded-xl p-4 mb-6">
             <p className="text-sm text-gray-600">
-              <strong>Uploaded Reports:</strong> {uploadedReports.length} file(s) analyzed
+              <strong>Uploaded Reports:</strong> {uniqueReports.length} file(s) analyzed
             </p>
           </div>
         )}
@@ -650,7 +669,7 @@ const loadRecommendations = async () => {
         <h3 className="text-xl font-bold text-gray-800 mb-4">Uploaded Report History</h3>
         {uploadedReports.length > 0 ? (
           <div className="space-y-3">
-            {uploadedReports.map((report) => (
+            {uniqueReports.map((report) => (
               <div key={report.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
                 <div className="flex items-center gap-3">
                   <div className="text-2xl">📋</div>

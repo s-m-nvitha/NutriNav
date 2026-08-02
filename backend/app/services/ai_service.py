@@ -44,15 +44,15 @@ def generate_nutrition_response(
     ]
 
 
-    if not any(word in question.lower() for word in meal_words):
+    if any(word in question.lower() for word in meal_words):
 
         reason = find_food_reason(
             user_context.get("meal_plan", {}),
             question
         )
 
-        if reason:
-            return reason
+        if isinstance(reason, dict):
+            return reason["explanation"]
 
 
     # -----------------------------
@@ -147,11 +147,22 @@ CURRENT USER QUESTION:
 Provide a personalized response.
 """
 
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt
+        )
 
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=prompt
-    )
+        return response.text
+
+    except Exception as e:
+        print("Gemini Error:", e)
+
+        return (
+            "NutriNav AI is temporarily unavailable "
+            "because the Gemini API quota has been exceeded. "
+            "Please try again later."
+        )
 
 
-    return response.text
+    
