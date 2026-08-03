@@ -11,6 +11,12 @@ import {
   Tooltip,
   CartesianGrid,
 } from "recharts";
+import {
+  CircularProgressbar,
+  buildStyles,
+} from "react-circular-progressbar";
+
+import "react-circular-progressbar/dist/styles.css";
 
 function Progress() {
 
@@ -50,60 +56,75 @@ function Progress() {
     <div className="space-y-6">
 
       <Card>
-        <h2 className="text-2xl font-bold mb-4">
-          📈 Health Progress Dashboard
-        </h2>
+        <h2 className="text-3xl font-bold text-gray-800 mb-3">
+  📈 Health Progress Dashboard
+</h2>
 
-        <p className="text-gray-600">
-          Track your nutritional health journey
-        </p>
+<p className="text-gray-500">
+  Monitor your nutritional improvements over time
+</p>
+
+      
       </Card>
 
-      <div className="grid md:grid-cols-5 gap-6">
-        <Card>
-  <h3 className="font-semibold mb-2">
-    Health Status
-  </h3>
+      <div className="grid md:grid-cols-5 gap-8">
+        <Card className="bg-green-50 border border-green-200 hover:scale-105 transition duration-300">
+  <h3 className="flex items-center justify-center gap-2 font-semibold mb-2">
+  🩺 Health Status
+</h3>
 
   <p className="text-4xl font-bold text-green-600">
     {healthStatus}
   </p>
 </Card>
 
-<Card>
-  <h3 className="font-semibold mb-2">
-    Goal
-  </h3>
+<Card className="bg-blue-50 border border-blue-200 hover:scale-105 transition duration-300">
+  <h3 className="flex items-center justify-center gap-2 font-semibold mb-2">
+  🎯 Goal
+</h3>
 
   <p className="text-4xl font-bold text-blue-600">
     95%
   </p>
 </Card>
 
-        <Card>
-          <h3 className="font-semibold mb-2">
-            Health Score
-          </h3>
+        <Card className="bg-yellow-50 border border-yellow-200 hover:scale-105 transition duration-300">
 
-          <p className="text-4xl font-bold text-green-600">
-            {progress.health_score}
-          </p>
-        </Card>
+  <h3 className="flex items-center justify-center gap-2 font-semibold mb-5">
+  ❤️ Health Score
+</h3>
 
-        <Card>
-          <h3 className="font-semibold mb-2">
-            Deficiencies Found
-          </h3>
+  <div className="w-32 h-32 mx-auto">
+
+    <CircularProgressbar
+      value={progress.health_score}
+      text={`${progress.health_score}%`}
+      styles={buildStyles({
+        textSize: "18px",
+        pathColor: "#22c55e",
+        textColor: "#16a34a",
+        trailColor: "#e5e7eb",
+      })}
+    />
+
+  </div>
+
+</Card>
+
+        <Card className="bg-red-50 border border-red-200 hover:scale-105 transition duration-300">
+          <h3 className="flex items-center justify-center gap-2 font-semibold mb-2">
+  ⚠️ Deficiencies
+</h3>
 
           <p className="text-4xl font-bold text-red-500">
             {progress.deficiencies_found}
           </p>
         </Card>
 
-        <Card>
-          <h3 className="font-semibold mb-2">
-            Improvement
-          </h3>
+        <Card className="bg-purple-50 border border-purple-200 hover:scale-105 transition duration-300">
+          <h3 className="flex items-center justify-center gap-2 font-semibold mb-2">
+  📈 Improvement
+</h3>
 
           <p className="text-5xl font-bold text-blue-600">
             {progress.improvement}%
@@ -200,23 +221,31 @@ return(
 
 <div key={item.nutrient} className="mb-5">
 
-<div className="flex justify-between">
+<div className="flex justify-between items-center">
 
-<span>{item.nutrient}</span>
+<div>
+  <h4 className="font-semibold">
+    🩸 {item.nutrient}
+  </h4>
 
-<span>
-{item.current}/{item.target}
-</span>
+  <p className="text-sm text-gray-500">
+    {Math.round(percent)}% of target
+  </p>
+</div>
+
+<div className="font-semibold text-green-600">
+  {item.current} / {item.target}
+</div>
 
 </div>
 
-<div className="w-full bg-gray-200 rounded-full h-4 mt-2">
+<div className="w-full bg-gray-200 rounded-full h-5 mt-3 overflow-hidden">
 
 <div
-className="bg-green-500 h-4 rounded-full"
-style={{
-width:`${Math.min(percent,100)}%`
-}}
+  className="bg-gradient-to-r from-green-400 to-green-600 h-5 rounded-full transition-all duration-1000"
+  style={{
+    width: `${Math.min(percent, 100)}%`,
+  }}
 />
 
 </div>
@@ -237,18 +266,21 @@ width:`${Math.min(percent,100)}%`
 
 </h3>
 
-<div className="flex flex-wrap gap-4">
+<div className="grid md:grid-cols-3 gap-4">
 
-<div className="bg-green-100 px-4 py-2 rounded-full">
-📄 Reports Uploaded
+<div className="bg-green-50 border border-green-200 rounded-xl p-4 text-center">
+<h4 className="text-3xl">📄</h4>
+<p className="font-semibold mt-2">Reports Uploaded</p>
 </div>
 
-<div className="bg-blue-100 px-4 py-2 rounded-full">
-❤️ Health Improving
+<div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-center">
+<h4 className="text-3xl">❤️</h4>
+<p className="font-semibold mt-2">Health Improving</p>
 </div>
 
-<div className="bg-yellow-100 px-4 py-2 rounded-full">
-🥗 Healthy Diet
+<div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 text-center">
+<h4 className="text-3xl">🥗</h4>
+<p className="font-semibold mt-2">Healthy Diet</p>
 </div>
 
 </div>
@@ -263,16 +295,23 @@ width:`${Math.min(percent,100)}%`
 
 </h3>
 
-<ul className="space-y-3">
+<ul className="space-y-4">
 
-<li>✅ Report Uploaded</li>
+<li className="bg-green-50 border-l-4 border-green-500 p-3 rounded-r-lg">
+  ✅ Report Uploaded
+</li>
 
-<li>✅ AI Analysis Completed</li>
+<li className="bg-blue-50 border-l-4 border-blue-500 p-3 rounded-r-lg">
+  🤖 AI Analysis Completed
+</li>
 
-<li>✅ Meal Plan Generated</li>
+<li className="bg-yellow-50 border-l-4 border-yellow-500 p-3 rounded-r-lg">
+  🍽️ Meal Plan Generated
+</li>
 
-<li>✅ Health Score Updated</li>
-
+<li className="bg-purple-50 border-l-4 border-purple-500 p-3 rounded-r-lg">
+  ❤️ Health Score Updated
+</li>
 </ul>
 
 </Card>
