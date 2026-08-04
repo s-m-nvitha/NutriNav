@@ -46,6 +46,12 @@ const Sidebar = ({
     icon: '📄'
   },
 
+  {
+    name: "Body Explorer",
+    path: "/body-explorer",
+    icon: "🧬",
+},
+
   { 
     name: 'Results',
     path: '/results',

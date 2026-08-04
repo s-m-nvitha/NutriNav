@@ -90,7 +90,7 @@ const AppRoutes = () => {
         <Route path="results" element={<Results />} />
         <Route path="results/deficiency" element={<DeficiencyAnalysis />} />
 <Route path="results/food-guidance" element={<FoodGuidance />} />
-<Route path="results/body-explorer" element={<BodyExplorer />} />
+<Route path="body-explorer" element={<BodyExplorer />} />
 <Route path="meal-planner" element={<MealPlanner />} />
 <Route path="chat" element={<Chat />} />
       </Route>
