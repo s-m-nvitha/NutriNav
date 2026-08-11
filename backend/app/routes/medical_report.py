@@ -35,7 +35,16 @@ async def upload_medical_report(
     if file.filename.lower().endswith(".pdf"):
         extracted_text = extract_text_from_pdf(file_path)
         deficiencies = analyze_deficiencies(extracted_text)
+
+        print("========== HEMOGLOBIN SEARCH ==========")
+
+        for line in extracted_text.splitlines():
+            if "hemoglobin" in line.lower():
+                print(repr(line))
         
+
+        print("=======================================")
+
         print("========== DEFICIENCIES ==========")
         print(deficiencies)
         print("==================================")

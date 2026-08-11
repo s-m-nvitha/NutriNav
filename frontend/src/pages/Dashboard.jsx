@@ -315,7 +315,7 @@ Complete profile for recommendations
         </Link>
 
         {/* Body Nutrient Explorer Preview */}
-        <Link to="/results/body-explorer" className="h-full">
+        <Link to="/body-explorer" className="h-full">
           <Card hover className="border-t-4 border-t-purple-500 cursor-pointer h-full">
             <div className="flex items-start justify-between mb-4">
               <div>

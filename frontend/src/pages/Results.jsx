@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Card from '../components/Card';
 import { medicalReportService } from '../services/medicalReportService';
 import { deficiencyReportService } from '../services/deficiencyReportService';
-import bodyImage from '../assets/body.jpg';
 import { useNavigate } from "react-router-dom";
-import BodyExplorer from "../components/BodyExplorer";
+import bodyImage from "../assets/bodyy.png";
+
 
 const Results = () => {
   const navigate = useNavigate();
@@ -13,7 +13,6 @@ const Results = () => {
   const [recommendations, setRecommendations] = useState({});
   const [profileContext, setProfileContext] = useState("");
   const [aiExplanations, setAiExplanations] = useState([]);
-  const [selectedOrgan, setSelectedOrgan] = useState("Brain");
 
 const uniqueReports = uploadedReports.filter(
   (report, index, self) =>
@@ -25,26 +24,7 @@ const uniqueReports = uploadedReports.filter(
 
 const totalReports = uniqueReports.length;
 const totalDeficiencies = deficiencies.length;
-  const [organInfo, setOrganInfo] = useState(null);
 
-  const fetchOrganInfo = async (organ) => {
-
-  try {
-
-    const response = await fetch(
-      `http://127.0.0.1:8000/body-explorer/${organ}`
-    );
-
-    const data = await response.json();
-
-    setOrganInfo(data);
-
-  } catch (error) {
-
-    console.error(error);
-
-  }
-};
 
 const overallStatus =
   deficiencies.length === 0
@@ -67,61 +47,6 @@ deficiencies.forEach((d) => {
 const healthScore = Math.max(score, 40);
 
 
-const organData = {
-  Brain: {
-    nutrients: ["Vitamin B12", "Iron"],
-    symptoms: [
-      "Brain fog",
-      "Poor concentration",
-      "Fatigue"
-    ]
-  },
-
-  Blood: {
-    nutrients: ["Iron"],
-    symptoms: [
-      "Dizziness",
-      "Pale skin",
-      "Low energy"
-    ]
-  },
-
-  "Digestive System": {
-  nutrients: ["Iron"],
-  symptoms: [
-    "Poor nutrient absorption",
-    "Digestive discomfort",
-    "Low energy"
-  ]
-},
-
-  Bones: {
-    nutrients: ["Vitamin D"],
-    symptoms: [
-      "Bone pain",
-      "Weak bones",
-      "Fatigue"
-    ]
-  },
-
-  Muscles: {
-    nutrients: ["Vitamin D"],
-    symptoms: [
-      "Muscle weakness",
-      "Low stamina",
-      "Fatigue"
-    ]
-  },
-
-  "Nervous System": {
-    nutrients: ["Vitamin B12"],
-    symptoms: [
-      "Numbness",
-      "Tingling",
-      "Nerve weakness"
-    ]
-  }
-};
 const getSeverityColor = (severity) => {
   switch (severity?.toLowerCase()) {
     case "mild":
@@ -137,11 +62,10 @@ const getSeverityColor = (severity) => {
       return "bg-gray-100 text-gray-700";
   }
 };
-  useEffect(() => {
+useEffect(() => {
   loadReports();
   loadDeficiencies();
   loadRecommendations();
-  fetchOrganInfo("brain");
 }, []);
 
   const loadReports = async () => {
@@ -362,307 +286,39 @@ const loadRecommendations = async () => {
       </div>
 
 <Card>
-  <h3 className="text-xl font-bold text-gray-800 mb-4">
-    Interactive Body Explorer
-  </h3>
 
-  <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl p-6">
+<h3 className="text-2xl font-bold mb-3">
+🧬 Interactive Body Explorer
+</h3>
 
-    <p className="text-gray-600 mb-6">
-      Body areas potentially affected by your detected deficiencies
-    </p>
+<p className="text-gray-600 mb-5">
+See which organs are affected by your nutrient deficiencies,
+explore symptoms, and view personalized food recommendations.
+</p>
 
-    <div className="flex justify-center">
+<div className="flex justify-center">
 
-      <div className="relative">
+<img
+src={bodyImage}
+alt="Body Explorer"
+className="w-64"
+/>
 
-        <img
-          src={bodyImage}
-          alt="Human Body"
-          className="w-[380px] md:w-[480px]"
-        />
-
-        {/* Brain */}
-
-        {(deficiencies.some(
-          d =>
-            d.nutrient_name === "Vitamin B12" ||
-            d.nutrient_name === "Iron"
-        )) && (
-          <div className="absolute top-[6%] left-[50%] -translate-x-1/2">
-            <button
-  onClick={() => {
-    setSelectedOrgan("Brain");
-    fetchOrganInfo("brain");
-  }}
-  className="w-6 h-6 bg-blue-500 ring-4 ring-blue-200 rounded-full animate-pulse shadow-lg hover:scale-125 transition-all border-2 border-white"
-></button>
-<div className="absolute top-[12%] left-[58%]">
-  <span className="bg-white px-2 py-1 rounded-lg shadow text-xs">
-    Brain
-  </span>
 </div>
-          </div>
-        )}
 
-        {/* Nervous System */}
+<div className="text-center mt-6">
 
-        {(deficiencies.some(
-          d => d.nutrient_name === "Vitamin B12"
-        )) && (
-          <div className="absolute top-[22%] left-[50%] -translate-x-1/2">
-            <button
-  onClick={() => {
-    setSelectedOrgan("Nervous System");
-    fetchOrganInfo("nervous-system");
-  }}
-  className="w-6 h-6 bg-purple-500 rounded-full animate-pulse shadow-lg hover:scale-125 transition-all border-2 border-white"
-></button>
-          </div>
-        )}
-
-        {/* Blood */}
-
-        {(deficiencies.some(
-          d => d.nutrient_name === "Iron"
-        )) && (
-          <div className="absolute top-[45%] left-[38%] -translate-x-1/2">
-            <button
-  onClick={() => {
-    setSelectedOrgan("Blood");
-    fetchOrganInfo("blood");
-  }}
-  className="w-6 h-6 bg-red-500 rounded-full animate-pulse shadow-lg hover:scale-125 transition-all border-2 border-white"
-></button>
-<div className="absolute top-[40%] left-[58%]">
-  <span className="bg-white px-2 py-1 rounded-lg shadow text-xs">
-    Blood
-  </span>
-</div>
-          </div>
-        )}
-
-        {/* Digestive System */}
-
-{(deficiencies.some(
-  d => d.nutrient_name === "Iron"
-)) && (
-  <div className="absolute top-[42%] left-[50%] -translate-x-1/2">
-
-    <button
-      onClick={() => {
-        setSelectedOrgan("Digestive System");
-        fetchOrganInfo("digestive-system");
-      }}
-      className="w-6 h-6 bg-orange-500 rounded-full animate-pulse shadow-lg hover:scale-125 transition-all border-2 border-white"
-    ></button>
-
-    <div className="absolute top-[0%] left-[120%]">
-      <span className="bg-white px-2 py-1 rounded-lg shadow text-xs">
-        Digestive
-      </span>
-    </div>
-
-  </div>
-)}
-
-        {/* Bones */}
-
-        {(deficiencies.some(
-          d => d.nutrient_name === "Vitamin D"
-        )) && (
-          <div className="absolute top-[72%] left-[48%] -translate-x-1/2">
-            <button
-  onClick={() => {
-    setSelectedOrgan("Bones");
-    fetchOrganInfo("bones");
-  }}
-  className="w-6 h-6 bg-yellow-500 rounded-full animate-pulse shadow-lg hover:scale-125 transition-all border-2 border-white"
-></button>
-<div className="absolute top-[58%] left-[58%]">
-  <span className="bg-white px-2 py-1 rounded-lg shadow text-xs">
-    Bones
-  </span>
-</div>
-          </div>
-        )}
-
-        {/* Muscles */}
-
-        {(deficiencies.some(
-          d => d.nutrient_name === "Vitamin D"
-        )) && (
-          <div className="absolute top-[65%] left-[58%] -translate-x-1/2">
-            <button
-  onClick={() => {
-    setSelectedOrgan("Muscles");
-    fetchOrganInfo("muscles");
-  }}
-  className="w-6 h-6 bg-green-500 rounded-full animate-pulse shadow-lg hover:scale-125 transition-all border-2 border-white"
-></button>
-          </div>
-        )}
-
-      </div>
-
-    </div>
-
-    <div className="mt-6 grid grid-cols-2 md:grid-cols-3 gap-3">
-
-      <div
-        onClick={() => {
-
-  setSelectedOrgan("Brain");
-
-  fetchOrganInfo("brain");
-
-}}
-        className={`rounded-xl p-3 text-center cursor-pointer hover:bg-blue-50 ${
-          selectedOrgan === "Brain"
-            ? "bg-blue-100 border-2 border-blue-500"
-            : "bg-white"
-        }`} 
-      >
-        🧠 Brain
-      </div>
-    
-      <div
-        onClick={() => {
-
-  setSelectedOrgan("Nervous System");
-
-  fetchOrganInfo("nervous-system");
-
-}}
-        className={`rounded-xl p-3 text-center cursor-pointer hover:bg-blue-50 ${
-          selectedOrgan === "Nervous System"
-            ? "bg-blue-100 border-2 border-blue-500"
-            : "bg-white"
-        }`}
-      >
-          ⚡ Nervous System
-      </div>
-
-      <div
-        onClick={() => {
-
-  setSelectedOrgan("Blood");
-
-  fetchOrganInfo("blood");
-
-}}
-        className={`rounded-xl p-3 text-center cursor-pointer hover:bg-blue-50 ${
-          selectedOrgan === "Blood"
-            ? "bg-blue-100 border-2 border-blue-500"
-            : "bg-white"
-        }`}
-      >
-          🩸 Blood
-      </div>
-
-      <div
-        onClick={() => {
-
-  setSelectedOrgan("Bones");
-
-  fetchOrganInfo("bones");
-
-}}
-        className={`rounded-xl p-3 text-center cursor-pointer hover:bg-blue-50 ${
-          selectedOrgan === "Bones"
-            ? "bg-blue-100 border-2 border-blue-500"
-            : "bg-white"
-        }`}
-      >
-          🦴 Bones
-      </div>
-      <div
-        onClick={() => {
-
-  setSelectedOrgan("Muscles");
-
-  fetchOrganInfo("muscles");
-
-}}
-        className={`rounded-xl p-3 text-center cursor-pointer hover:bg-blue-50 ${
-          selectedOrgan === "Muscles"
-            ? "bg-blue-100 border-2 border-blue-500"
-            : "bg-white"
-        }`}
-      >
-          💪 Muscles
-      </div>
-      <div
-  onClick={() => {
-
-    setSelectedOrgan("Digestive System");
-
-    fetchOrganInfo("digestive-system");
-
-  }}
-  className={`rounded-xl p-3 text-center cursor-pointer hover:bg-blue-50 ${
-    selectedOrgan === "Digestive System"
-      ? "bg-blue-100 border-2 border-blue-500"
-      : "bg-white"
-  }`}
+<button
+onClick={() => navigate("/body-explorer")}
+className="bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700"
 >
-  🍽️ Digestive System
+
+Open Body Explorer →
+
+</button>
+
 </div>
-    </div>
 
-  </div>
-
-  {organInfo && (
-    <div className="mt-6 bg-white rounded-xl p-6 border shadow">
-
-      <h3 className="text-2xl font-bold mb-4">
-        {selectedOrgan}
-      </h3>
-
-    <div className="mb-4">
-      <h4 className="font-semibold mb-2">
-        Affected Nutrients
-      </h4>
-
-      <ul className="list-disc ml-6">
-        <li>
-  {organInfo.deficiency}
-</li>
-      </ul>
-    </div>
-
-    <div className="mb-4">
-      <h4 className="font-semibold mb-2">
-        Possible Symptoms
-      </h4>
-
-      <ul className="list-disc ml-6">
-        {organInfo.effects.map(effect => (
-
-  <li key={effect}>
-    {effect}
-  </li>
-
-))}
-      </ul>
-    </div>
-
-    <div>
-      <h4 className="font-semibold mb-2">
-        Recommended Foods
-      </h4>
-
-      {organData[selectedOrgan].nutrients.map((nutrient) => (
-        <div key={nutrient} className="mb-2">
-          <strong>{nutrient}:</strong>{" "}
-          {recommendations[nutrient]?.join(", ") ||
-            "No foods available"}
-        </div>
-      ))}
-    </div>
-
-  </div>
-)}
 </Card>
 
       <Card>
