@@ -54,11 +54,20 @@ BODY_MAP = {
     },
 
     "skin": {
-        "deficiency": "Vitamin B12",
-        "effects": [
-            "Pale skin",
-            "Dry skin",
-            "Poor skin health"
+       "deficiency": "Vitamin B12",
+       "effects": [
+           "Pale skin",
+           "Dry skin",
+           "Poor skin health"
         ]
+    },
+
+    "digestive-system": {
+       "deficiency": "Iron",
+       "effects": [
+           "Reduced nutrient absorption",
+           "Digestive discomfort",
+           "Fatigue"
+       ]
     }
 }
