@@ -1,3 +1,4 @@
+import robotImage from '../assets/nn_bot.png';
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -123,278 +124,566 @@ useEffect(() => {
   </Link>
 )}
 
-      {/* Main AI Health Assistant - Full Width */}
-      <Card hover className="border-l-4 border-l-blue-500">
-        <div className="flex items-start justify-between mb-6">
-          <div>
-            <h3 className="text-2xl font-bold text-gray-800">AI Health Assistant</h3>
-            <p className="text-gray-600 mt-1">Your personal AI-powered health companion</p>
+      {/* AI Nutrition Coach */}
+<Card
+  hover
+  className="relative overflow-hidden border-0 bg-gradient-to-r from-[#06271d] via-[#073b29] to-[#06271d] text-white min-h-[230px]"
+>
+  <div className="relative z-10 grid grid-cols-1 lg:grid-cols-[1.1fr_1.2fr_0.8fr] gap-6 items-center">
+
+    {/* Left - AI Coach Introduction */}
+    <div className="space-y-2">
+
+      <div>
+        <h3 className="text-3xl md:text-4xl font-bold leading-tight">
+          AI Nutrition
+          <span className="block text-green-400">
+            Coach
+          </span>
+        </h3>
+
+        <p className="text-gray-200 mt-4 text-sm md:text-sm max-w-sm">
+          Ask anything about your health,
+          nutrition, meals or symptoms.
+        </p>
+      </div>
+
+      <Link to="/chat">
+        <Button
+          variant="primary"
+          size="md"
+          className="mt-2 rounded-full px-6"
+        >
+          Start Chatting →
+        </Button>
+      </Link>
+
+    </div>
+
+
+    {/* Middle - Greeting + Suggested Questions */}
+    <div className="space-y-2">
+
+      {/* Greeting */}
+      <div className="inline-block bg-white/10 backdrop-blur-sm rounded-2xl px-5 py-4 border border-white/10">
+        <p className="text-sm md:text-sm">
+          👋 Hi Samanvitha! How can I help you today?
+        </p>
+      </div>
+
+      {/* Suggested Questions */}
+      <div className="space-y-2">
+
+        <Link
+          to="/chat"
+          className="group block"
+        >
+          <div className="flex items-center justify-between bg-white/10 hover:bg-white/15 transition-all rounded-2xl px-4 py-2 border border-white/5">
+            <span className="text-sm md:text-sm">
+              What can I eat to improve my iron?
+            </span>
+
+            <span className="text-xl group-hover:translate-x-1 transition-transform">
+              →
+            </span>
           </div>
-          <div className="text-5xl">
+        </Link>
+
+
+        <Link
+          to="/chat"
+          className="group block"
+        >
+          <div className="flex items-center justify-between bg-white/10 hover:bg-white/15 transition-all rounded-2xl px-4 py-2 border border-white/5">
+            <span className="text-sm md:text-sm">
+              Is it okay to take protein everyday?
+            </span>
+
+            <span className="text-xl group-hover:translate-x-1 transition-transform">
+              →
+            </span>
+          </div>
+        </Link>
+
+
+        <Link
+          to="/chat"
+          className="group block"
+        >
+          <div className="flex items-center justify-between bg-white/10 hover:bg-white/15 transition-all rounded-2xl px-4 py-2 border border-white/5">
+            <span className="text-sm md:text-sm">
+              Suggest a healthy dinner for today
+            </span>
+
+            <span className="text-xl group-hover:translate-x-1 transition-transform">
+              →
+            </span>
+          </div>
+        </Link>
+
+      </div>
+
+    </div>
+
+
+    {/* Right - Robot */}
+    <div className="flex justify-center lg:justify-end items-end">
+
+      <img
+        src={robotImage}
+        alt="NutriNav AI Nutrition Coach"
+        className="w-44 md:w-52 lg:w-60 object-contain drop-shadow-2xl"
+      />
+
+    </div>
+
+  </div>
+
+  {/* Decorative glow */}
+  <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-green-500/10 rounded-full blur-3xl"></div>
+
+</Card>
+      
+
+      {/* Preview Cards Grid */}
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+
+  {/* ================= DEFICIENCY ANALYSIS ================= */}
+  <Link to="/results/deficiency" className="h-full group">
+    <Card
+      hover
+      className="h-full border-t-4 border-t-red-400 cursor-pointer"
+    >
+
+      {/* Header */}
+      <div className="flex items-center gap-4 mb-5">
+
+        <div className="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center text-3xl group-hover:scale-110 transition-transform">
+          🩸
+        </div>
+
+        <div>
+          <h3 className="text-lg font-bold text-gray-800">
+            Deficiency Analysis
+          </h3>
+
+          <p className="text-gray-500 text-sm mt-1">
+            Track nutrient levels
+          </p>
+        </div>
+
+      </div>
+
+
+      {/* Deficiency */}
+      <div className="bg-red-50 rounded-xl px-4 py-3 mb-4 flex items-center justify-between">
+
+        <span className="text-sm font-medium text-gray-700">
+          Iron
+        </span>
+
+        <span className="text-sm font-semibold text-red-500">
+          severe
+        </span>
+
+      </div>
+
+
+      {/* Upload message */}
+      <div className="bg-teal-50 rounded-xl px-4 py-3 flex items-center gap-3">
+
+        <span className="text-xl">
+          ☁️
+        </span>
+
+        <p className="text-sm text-gray-600">
+          Upload reports for detailed analysis
+        </p>
+
+      </div>
+
+
+      {/* View Details */}
+      <div className="mt-5 text-sm font-semibold text-teal-600 group-hover:translate-x-1 transition-transform">
+        View Details →
+      </div>
+
+    </Card>
+  </Link>
+
+
+  {/* ================= FOOD GUIDANCE ================= */}
+  <Link to="/results/food-guidance" className="h-full group">
+    <Card
+      hover
+      className="h-full border-t-4 border-t-green-500 cursor-pointer"
+    >
+
+      {/* Header */}
+      <div className="flex items-center gap-4 mb-5">
+
+        <div className="w-14 h-14 rounded-full bg-green-50 flex items-center justify-center text-3xl group-hover:scale-110 transition-transform">
+          🥗
+        </div>
+
+        <div>
+          <h3 className="text-lg font-bold text-gray-800">
+            Food Guidance
+          </h3>
+
+          <p className="text-gray-500 text-sm mt-1">
+            Personalized recommendations
+          </p>
+        </div>
+
+      </div>
+
+
+      {/* Recommendations */}
+      <div className="mb-4">
+
+        <p className="text-sm font-semibold text-gray-700 mb-3">
+          Top Recommendations
+        </p>
+
+        <div className="flex flex-wrap gap-2">
+
+          <span className="px-3 py-1.5 bg-green-50 rounded-full text-sm text-green-700">
+            Spinach
+          </span>
+
+          <span className="px-3 py-1.5 bg-green-50 rounded-full text-sm text-green-700">
+            Lentils
+          </span>
+
+          <span className="px-3 py-1.5 bg-green-50 rounded-full text-sm text-green-700">
+            Beans
+          </span>
+
+        </div>
+
+      </div>
+
+
+      {/* Health Tips */}
+      <div className="bg-green-50 rounded-xl px-4 py-3 flex items-center gap-3">
+
+        <span className="text-xl">
+          🌿
+        </span>
+
+        <p className="text-sm text-gray-600">
+          Choose low glycemic foods
+        </p>
+
+      </div>
+
+
+      {/* View Details */}
+      <div className="mt-5 text-sm font-semibold text-green-600 group-hover:translate-x-1 transition-transform">
+        View Details →
+      </div>
+
+    </Card>
+  </Link>
+
+
+  {/* ================= BODY EXPLORER ================= */}
+  <Link to="/body-explorer" className="h-full group">
+    <Card
+      hover
+      className="h-full border-t-4 border-t-purple-500 cursor-pointer"
+    >
+
+      {/* Header */}
+      <div className="flex items-center gap-4 mb-5">
+
+        <div className="w-14 h-14 rounded-full bg-purple-50 flex items-center justify-center text-3xl group-hover:scale-110 transition-transform">
+          🧍
+        </div>
+
+        <div>
+          <h3 className="text-lg font-bold text-gray-800">
+            Body Explorer
+          </h3>
+
+          <p className="text-gray-500 text-sm mt-1">
+            Nutrient relationships
+          </p>
+        </div>
+
+      </div>
+
+
+      {/* Body Mapping */}
+      <div className="bg-purple-50 rounded-xl p-4 mb-4">
+
+        <div className="flex items-start gap-3">
+
+          <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-xl">
+            🫀
+          </div>
+
+          <div>
+
+            <p className="text-sm font-medium text-gray-700">
+              Interactive body mapping
+            </p>
+
+            <p className="text-xs text-gray-500 mt-1">
+              Explore how nutrients work
+              <br />
+              for your body
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      {/* Body Parts */}
+      <div className="grid grid-cols-3 gap-2">
+
+        {['Brain', 'Eyes', 'Heart'].map((part) => (
+
+          <div
+            key={part}
+            className="px-2 py-2 bg-purple-50 rounded-lg text-xs font-medium text-center text-gray-700"
+          >
+            {part}
+          </div>
+
+        ))}
+
+      </div>
+
+
+      {/* Explore */}
+      <div className="mt-5 text-sm font-semibold text-purple-600 group-hover:translate-x-1 transition-transform">
+        Explore Now →
+      </div>
+
+    </Card>
+  </Link>
+
+</div>
+     
+
+      {/* Quick Actions */}
+<Card>
+  <h3 className="text-lg font-bold text-gray-800 mb-5">
+    Quick Actions
+  </h3>
+
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+    {/* Upload Report */}
+    <Link to="/medical-reports" className="group">
+      <div className="
+        h-full
+        rounded-2xl
+        border
+        border-gray-200
+        bg-white
+        p-5
+        transition-all
+        duration-300
+        hover:shadow-lg
+        hover:-translate-y-1
+        cursor-pointer
+      ">
+        <div className="flex items-center gap-4 mb-4">
+          <div className="
+            w-14 h-14
+            rounded-2xl
+            bg-green-100
+            flex items-center justify-center
+            text-3xl
+            group-hover:scale-110
+            transition-transform
+          ">
+            📄
+          </div>
+
+          <h4 className="text-lg font-semibold text-gray-800">
+            Upload Report
+          </h4>
+        </div>
+
+        <p className="text-sm text-gray-500 leading-relaxed">
+          Upload your medical report for AI-powered analysis.
+        </p>
+
+        <div className="
+          mt-4
+          text-sm
+          font-medium
+          text-green-600
+          group-hover:translate-x-1
+          transition-transform
+        ">
+          Upload now →
+        </div>
+      </div>
+    </Link>
+
+
+    {/* Results */}
+    <Link to="/results" className="group">
+      <div className="
+        h-full
+        rounded-2xl
+        border
+        border-gray-200
+        bg-white
+        p-5
+        transition-all
+        duration-300
+        hover:shadow-lg
+        hover:-translate-y-1
+        cursor-pointer
+      ">
+        <div className="flex items-center gap-4 mb-4">
+          <div className="
+            w-14 h-14
+            rounded-2xl
+            bg-blue-100
+            flex items-center justify-center
+            text-3xl
+            group-hover:scale-110
+            transition-transform
+          ">
+            📊
+          </div>
+
+          <h4 className="text-lg font-semibold text-gray-800">
+            Results
+          </h4>
+        </div>
+
+        <p className="text-sm text-gray-500 leading-relaxed">
+          View your nutrient deficiencies and health insights.
+        </p>
+
+        <div className="
+          mt-4
+          text-sm
+          font-medium
+          text-blue-600
+          group-hover:translate-x-1
+          transition-transform
+        ">
+          View results →
+        </div>
+      </div>
+    </Link>
+
+
+    {/* Ask AI */}
+    <Link to="/chat" className="group">
+      <div className="
+        h-full
+        rounded-2xl
+        border
+        border-gray-200
+        bg-white
+        p-5
+        transition-all
+        duration-300
+        hover:shadow-lg
+        hover:-translate-y-1
+        cursor-pointer
+      ">
+        <div className="flex items-center gap-4 mb-4">
+          <div className="
+            w-14 h-14
+            rounded-2xl
+            bg-purple-100
+            flex items-center justify-center
+            text-3xl
+            group-hover:scale-110
+            transition-transform
+          ">
             🤖
           </div>
 
+          <h4 className="text-lg font-semibold text-gray-800">
+            Ask AI
+          </h4>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-blue-50 rounded-xl p-4 hover:shadow-md transition-shadow">
-            <h4 className="font-semibold text-gray-800 mb-2">Health Summary</h4>
-            <p className="text-sm text-gray-600">Upload reports for AI insights</p>
-          </div>
-          
-          <div className="bg-teal-50 rounded-xl p-4 hover:shadow-md transition-shadow">
-            <h4 className="font-semibold text-gray-800 mb-2">Upload Reports</h4>
-            <Link to="/medical-reports">
-              <Button variant="primary" size="sm" className="mt-2">
-                Upload Now
-              </Button>
-            </Link>
-          </div>
-          
-          <div className="bg-gray-50 rounded-xl p-4 hover:shadow-md transition-shadow">
-  <h4 className="font-semibold text-gray-800 mb-2">
-    AI Assistant
-  </h4>
 
-  <p className="text-sm text-gray-500 mb-3">
-    Ask questions about deficiencies,
-    foods, reports and meal plans.
-  </p>
+        <p className="text-sm text-gray-500 leading-relaxed">
+          Ask questions about nutrition, deficiencies and meals.
+        </p>
 
-  <Link to="/chat">
-    <Button variant="primary" size="sm">
-      Open Assistant
-    </Button>
-  </Link>
-</div>
-          
-          <div className="bg-gray-50 rounded-xl p-4 hover:shadow-md transition-shadow">
-            <h4 className="font-semibold text-gray-800 mb-2">Analysis Status</h4>
-            <div className="flex items-center gap-2">
-              <div
-  className={`w-3 h-3 rounded-full animate-pulse ${
-    deficiencies.length > 0
-      ? "bg-green-500"
-      : "bg-yellow-400"
-  }`}
-/>
-              <span className="text-sm text-gray-600">
-  {deficiencies.length > 0
-    ? "Analysis Complete"
-    : "Waiting for data"}
-</span>
-            </div>
-          </div>
+        <div className="
+          mt-4
+          text-sm
+          font-medium
+          text-purple-600
+          group-hover:translate-x-1
+          transition-transform
+        ">
+          Start chatting →
         </div>
-      </Card>
-
-      {/* Preview Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-        {/* Deficiency Analysis Preview */}
-        <Link to="/results/deficiency" className="h-full">
-          <Card hover className="border-t-4 border-t-teal-500 cursor-pointer h-full">
-            <div className="flex items-start justify-between mb-4">
-              <div>
-                <h3 className="text-lg font-bold text-gray-800">Deficiency Analysis</h3>
-                <p className="text-gray-500 text-sm mt-1">Track nutrient levels</p>
-              </div>
-              <div className="text-5xl">
-                🩸
-              </div>
-
-            </div>
-            
-            <div className="space-y-2 mb-4">
-
-{
-  deficiencies.length > 0 ? (
-
-    deficiencies.map((item)=>(
-
-      <div
-        key={item.id}
-        className="flex items-center justify-between"
-      >
-
-        <span className="text-xs font-medium text-gray-600">
-          {item.nutrient}
-        </span>
-
-        <span className="text-xs text-red-500">
-          {item.severity}
-        </span>
-
       </div>
-
-    ))
-
-  ) : (
-
-    <p className="text-xs text-gray-500">
-      No deficiencies detected yet
-    </p>
-
-  )
-}
-
-</div>
-            
-            <div className="bg-teal-50 rounded-lg p-3">
-              <p className="text-xs text-gray-600">Upload reports for detailed analysis</p>
-            </div>
-          </Card>
-        </Link>
-
-        {/* Food Recommendations Preview */}
-        <Link to="/results/food-guidance" className="h-full">
-          <Card hover className="border-t-4 border-t-green-500 cursor-pointer h-full">
-            <div className="flex items-start justify-between mb-4">
-              <div>
-                <h3 className="text-lg font-bold text-gray-800">Food Guidance</h3>
-                <p className="text-gray-500 text-sm mt-1">Personalized recommendations</p>
-              </div>
-              <div className="text-5xl">
-                🥗
-              </div>
-
-            </div>
-            
-          
-              <div className="space-y-3 mb-4">
-
-{
-Object.keys(recommendations).length > 0 ? (
-
-Object.entries(recommendations).map(
-([nutrient, foods]) => (
-
-<div key={nutrient}>
-
-<p className="text-xs font-semibold text-gray-700">
-{nutrient}
-</p>
-
-<div className="flex flex-wrap gap-1 mt-1">
-
-{
-Array.isArray(foods) && foods.map((food)=>(
-
-<span
-key={food}
-className="px-2 py-1 bg-green-50 rounded text-xs text-gray-600"
->
-{food}
-</span>
-
-))
-}
-
-</div>
-
-</div>
-
-))
-
-) : (
-
-<p className="text-xs text-gray-500">
-Complete profile for recommendations
-</p>
-
-)
-
-}
-
-</div>
+    </Link>
 
 
-<div className="bg-green-50 rounded-lg p-3">
-              <p className="text-xs text-gray-600">Complete profile for full recommendations</p>
-            </div>
-          </Card>
-        </Link>
+    {/* Food Guidance */}
+    <Link to="/results/food-guidance" className="group">
+      <div className="
+        h-full
+        rounded-2xl
+        border
+        border-gray-200
+        bg-white
+        p-5
+        transition-all
+        duration-300
+        hover:shadow-lg
+        hover:-translate-y-1
+        cursor-pointer
+      ">
+        <div className="flex items-center gap-4 mb-4">
+          <div className="
+            w-14 h-14
+            rounded-2xl
+            bg-orange-100
+            flex items-center justify-center
+            text-3xl
+            group-hover:scale-110
+            transition-transform
+          ">
+            🥗
+          </div>
 
-        {/* Body Nutrient Explorer Preview */}
-        <Link to="/body-explorer" className="h-full">
-          <Card hover className="border-t-4 border-t-purple-500 cursor-pointer h-full">
-            <div className="flex items-start justify-between mb-4">
-              <div>
-                <h3 className="text-lg font-bold text-gray-800">Body Explorer</h3>
-                <p className="text-gray-500 text-sm mt-1">Nutrient relationships</p>
-              </div>
-              <div className="text-5xl">
-                🧍
-              </div>
+          <h4 className="text-lg font-semibold text-gray-800">
+            Food Guidance
+          </h4>
+        </div>
 
-            </div>
-            
-            <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-lg p-4 mb-4">
-  <div className="flex flex-col items-center justify-center">
-    <div className="text-4xl mb-2">🫀</div>
+        <p className="text-sm text-gray-500 leading-relaxed">
+          Discover personalized foods based on your health needs.
+        </p>
 
-    <p className="text-xs text-gray-600 text-center">
-      Interactive body mapping
-    </p>
+        <div className="
+          mt-4
+          text-sm
+          font-medium
+          text-orange-600
+          group-hover:translate-x-1
+          transition-transform
+        ">
+          Explore foods →
+        </div>
+      </div>
+    </Link>
+
   </div>
-</div>
-            
-            <div className="grid grid-cols-3 gap-1">
-              {['Brain', 'Eyes', 'Heart'].map((part) => (
-                <button
-                  key={part}
-                  className="px-2 py-1.5 bg-purple-50 rounded text-xs font-medium text-gray-700 hover:bg-purple-100 transition-colors"
-                >
-                  {part}
-                </button>
-              ))}
-            </div>
-          </Card>
-        </Link>
-      </div>
-
-      {/* Quick Actions */}
-      <Card>
-        <h3 className="text-lg font-bold text-gray-800 mb-4">Quick Actions</h3>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-
-  <Link to="/medical-reports">
-  <Button variant="secondary" size="md" className="w-full">
-    📄 Upload Report
-  </Button>
-</Link>
-
-<Link to="/results">
-  <Button variant="secondary" size="md" className="w-full">
-    📊 Results
-  </Button>
-</Link>
-
-<Link to="/chat">
-  <Button variant="secondary" size="md" className="w-full">
-    🤖 Ask AI
-  </Button>
-</Link>
-
-<Link to="/results/food-guidance">
-  <Button variant="secondary" size="md" className="w-full">
-    🍎 Food Guidance
-  </Button>
-</Link>
-
-<Link to="/meal-planner">
-  <Button variant="secondary" size="md" className="w-full">
-    🍽️ Meal Planner
-  </Button>
-</Link>
-
-<Link to="/progress">
-  <Button variant="secondary" size="md" className="w-full">
-    📈 Progress
-  </Button>
-</Link>
-
-</div>
-      </Card>
+</Card>
     </div>
   );
 };
