@@ -4,304 +4,564 @@ import bodyImage from "../assets/bodyy.png";
 import { deficiencyReportService } from "../services/deficiencyReportService";
 
 const BodyExplorer = () => {
-
   const [selectedOrgan, setSelectedOrgan] = useState("Brain");
-
   const [deficiencies, setDeficiencies] = useState([]);
-
   const [recommendations, setRecommendations] = useState({});
-
   const [organInfo, setOrganInfo] = useState(null);
 
+  // Check whether the user has a particular deficiency
   const hasDeficiency = (nutrient) => {
-  return deficiencies.some(
-    d =>
-      d.nutrient_name?.trim().toLowerCase() ===
-      nutrient.trim().toLowerCase()
-  );
-};
+    return deficiencies.some(
+      (d) =>
+        d.nutrient_name?.trim().toLowerCase() ===
+        nutrient.trim().toLowerCase()
+    );
+  };
 
+  // Load deficiencies
   const loadDeficiencies = async () => {
     try {
       const data = await deficiencyReportService.getAll();
       setDeficiencies(data);
     } catch (err) {
-      console.log(err);
+      console.log("Error loading deficiencies:", err);
     }
   };
 
+  // Load food recommendations
   const loadRecommendations = async () => {
-  try {
-    const data =
-      await deficiencyReportService.getRecommendations();
+    try {
+      const data = await deficiencyReportService.getRecommendations();
 
-    console.log("RECOMMENDATIONS API:", data);
-    console.log("FOOD RECOMMENDATIONS:", data.food_recommendations);
+      console.log("RECOMMENDATIONS API:", data);
 
-    setRecommendations(
-      data.food_recommendations || {}
-    );
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-  const fetchOrganInfo = async (organ) => {
-  try {
-    setOrganInfo(null);
-
-    const response = await fetch(
-      `http://127.0.0.1:8000/body-explorer/${organ}`
-    );
-
-    if (!response.ok) {
-      throw new Error(`HTTP error: ${response.status}`);
+      setRecommendations(data.food_recommendations || {});
+    } catch (err) {
+      console.log("Error loading recommendations:", err);
     }
+  };
 
-    const data = await response.json();
+  // Load selected organ information
+  const fetchOrganInfo = async (organ) => {
+    try {
+      setOrganInfo(null);
 
-    console.log("Organ data:", data);
+      const response = await fetch(
+        `http://127.0.0.1:8000/body-explorer/${organ}`
+      );
 
-    setOrganInfo(data);
+      if (!response.ok) {
+        throw new Error(`HTTP error: ${response.status}`);
+      }
 
-  } catch (err) {
-    console.error("Error fetching organ info:", err);
-    setOrganInfo(null);
-  }
-};
+      const data = await response.json();
+
+      console.log("Organ data:", data);
+
+      setOrganInfo(data);
+    } catch (err) {
+      console.error("Error fetching organ info:", err);
+      setOrganInfo(null);
+    }
+  };
 
   useEffect(() => {
-
     loadDeficiencies();
-
     loadRecommendations();
-
     fetchOrganInfo("brain");
-
   }, []);
 
+  // Change selected organ
+  const selectOrgan = (name, apiName) => {
+    setSelectedOrgan(name);
+    fetchOrganInfo(apiName);
+  };
+
   return (
+    <div className="w-full px-3 sm:px-4 lg:px-5 py-4">
 
-    <div className="space-y-6">
+      {/* =========================================================
+          TOP INTRODUCTION SECTION
+      ========================================================= */}
+      <Card className="!p-0 overflow-hidden rounded-[22px] border border-green-100 shadow-sm">
 
-      <Card>
+        {/* ONLY GREEN COLOR CHANGED */}
+        <div className="bg-[#004530] text-white px-6 py-5">
 
-        <h1 className="text-3xl font-bold">
-          🧬 Interactive Body Explorer
-        </h1>
+          <div className="flex flex-col xl:flex-row items-center gap-8">
 
-        <p className="text-gray-600 mt-2">
-          Click on different organs to understand how
-          nutrient deficiencies affect your body.
-        </p>
+            {/* LEFT */}
+            <div className="flex items-center gap-5 flex-1 min-w-0">
 
+              <div className="w-16 h-16 rounded-full border border-green-300/60 bg-green-900/20 flex items-center justify-center text-3xl shrink-0">
+                🧬
+              </div>
+
+              <div>
+                <h1 className="text-2xl lg:text-3xl font-bold tracking-tight">
+                  Interactive Body Explorer
+                </h1>
+
+                <p className="text-sm lg:text-base text-green-50 mt-2 max-w-xl leading-relaxed">
+                  Click on different organs to understand how nutrient
+                  deficiencies affect your body.
+                </p>
+              </div>
+
+            </div>
+
+            {/* RIGHT INFORMATION */}
+            <div className="hidden lg:flex items-center shrink-0">
+
+              <div className="text-center px-6 xl:px-8">
+                <div className="text-2xl mb-1">🌿</div>
+
+                <h3 className="font-semibold text-sm">
+                  Explore Your Body
+                </h3>
+
+                <p className="text-xs text-green-100 mt-1">
+                  Click on any organ
+                </p>
+              </div>
+
+              <div className="h-16 w-px bg-green-200/30" />
+
+              <div className="text-center px-6 xl:px-8">
+                <div className="text-2xl mb-1">🛡️</div>
+
+                <h3 className="font-semibold text-sm">
+                  Understand Impact
+                </h3>
+
+                <p className="text-xs text-green-100 mt-1">
+                  See how deficiencies affect you
+                </p>
+              </div>
+
+              <div className="h-16 w-px bg-green-200/30" />
+
+              <div className="text-center px-6 xl:px-8">
+                <div className="text-2xl mb-1">🍎</div>
+
+                <h3 className="font-semibold text-sm">
+                  Get Recommendations
+                </h3>
+
+                <p className="text-xs text-green-100 mt-1">
+                  Discover foods for your health
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
       </Card>
 
-      <div className="grid lg:grid-cols-2 gap-6">
 
-        <Card>
+      {/* =========================================================
+          MAIN CONTENT
+      ========================================================= */}
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-5 mt-5 items-start">
 
-<div className="flex justify-center">
-  <div className="relative inline-block">
+        {/* =======================================================
+            LEFT - BODY IMAGE
+        ======================================================= */}
+        <Card className="!p-0 overflow-hidden rounded-[22px] border border-gray-200 shadow-sm">
 
-    <img
-      src={bodyImage}
-      alt="Human Body"
-      className="max-h-[700px] max-w-full object-contain block"
-    />
+          <div className="h-[700px] flex items-center justify-center bg-[#FCFDFC]">
 
-{/* Brain */}
-{(hasDeficiency("Iron") || hasDeficiency("Vitamin B12")) && (
-<button
-onClick={()=>{
-setSelectedOrgan("Brain");
-fetchOrganInfo("brain");
-}}
-className="
-absolute top-[2%] left-[46%]
-w-5 h-5
-rounded-full
-bg-yellow-400
-ring-4 ring-yellow-200
-animate-pulse
-transition
-hover:scale-125
-"
-/>
-)}
+            <div className="relative h-full flex items-center justify-center">
 
-{/* Nervous System */}
-{hasDeficiency("Vitamin B12") && (
-<button
-onClick={()=>{
-setSelectedOrgan("Nervous System");
-fetchOrganInfo("nervous-system");
-}}
-className="
-absolute top-[20%] left-[50%]
-w-5 h-5
-rounded-full
-bg-yellow-400
-ring-4 ring-yellow-200
-animate-pulse
-transition
-hover:scale-125
-z-20
-"
-/>
-)}
+              <img
+                src={bodyImage}
+                alt="Human Body"
+                className="h-[700px] w-auto object-contain"
+              />
 
-{/* Blood */}
-{hasDeficiency("Iron") && (
-<button
-onClick={()=>{
-setSelectedOrgan("Blood");
-fetchOrganInfo("blood");
-}}
-className="
-absolute top-[38%] left-[18%]
-w-5 h-5
-rounded-full
-bg-yellow-400
-ring-4 ring-yellow-200
-animate-pulse
-transition
-hover:scale-125
-"
-/>
-)}
+              {/* ================= BRAIN ================= */}
+              {(hasDeficiency("Iron") ||
+                hasDeficiency("Vitamin B12")) && (
 
-{/* Digestive */}
-{hasDeficiency("Iron") && (
-<button
-onClick={()=>{
-setSelectedOrgan("Digestive System");
-fetchOrganInfo("digestive-system");
-}}
-className="
-absolute top-[41%] left-[47%]
-w-5 h-5
-rounded-full
-bg-yellow-400
-ring-4 ring-yellow-200
-animate-pulse
-transition
-hover:scale-125
-"
-/>
-)}
+                <button
+                  onClick={() => selectOrgan("Brain", "brain")}
+                  aria-label="Brain"
+                  className="
+                    absolute
+                    top-[3%]
+                    left-[46%]
+                    w-6
+                    h-6
+                    rounded-full
+                    bg-yellow-400
+                    border-2
+                    border-yellow-200
+                    shadow-md
+                    hover:scale-125
+                    transition-transform
+                    z-20
+                  "
+                />
+              )}
 
-{/* Bones */}
-{hasDeficiency("Vitamin D") && (
-<button
-onClick={()=>{
-setSelectedOrgan("Bones");
-fetchOrganInfo("bones");
-}}
-className="
-absolute top-[70%] left-[56%]
-w-5 h-5
-rounded-full
-bg-yellow-400
-ring-4 ring-yellow-200
-animate-pulse
-transition
-hover:scale-125
-"
-/>
-)}
+              {/* ================= NERVOUS SYSTEM ================= */}
+              {hasDeficiency("Vitamin B12") && (
 
-{/* Muscles */}
-{hasDeficiency("Vitamin D") && (
-<button
-onClick={()=>{
-setSelectedOrgan("Muscles");
-fetchOrganInfo("muscles");
-}}
-className="
-absolute top-[30%] left-[69%]
-w-5 h-5
-rounded-full
-bg-yellow-400
-ring-4 ring-yellow-200
-animate-pulse
-transition
-hover:scale-125
-"
-/>
-)}
+                <button
+                  onClick={() =>
+                    selectOrgan("Nervous System", "nervous-system")
+                  }
+                  aria-label="Nervous System"
+                  className="
+                    absolute
+                    top-[21%]
+                    left-[49%]
+                    w-5
+                    h-5
+                    rounded-full
+                    bg-yellow-400
+                    border-2
+                    border-yellow-200
+                    shadow-md
+                    hover:scale-125
+                    transition-transform
+                    z-20
+                  "
+                />
+              )}
 
-</div>
+              {/* ================= BLOOD ================= */}
+              {hasDeficiency("Iron") && (
 
- 
-</div>
+                <button
+                  onClick={() => selectOrgan("Blood", "blood")}
+                  aria-label="Blood"
+                  className="
+                    absolute
+                    top-[39%]
+                    left-[17%]
+                    w-6
+                    h-6
+                    rounded-full
+                    bg-yellow-400
+                    border-2
+                    border-yellow-200
+                    shadow-md
+                    hover:scale-125
+                    transition-transform
+                    z-20
+                  "
+                />
+              )}
 
-</Card>
+              {/* ================= DIGESTIVE SYSTEM ================= */}
+              {hasDeficiency("Iron") && (
 
-        <Card>
+                <button
+                  onClick={() =>
+                    selectOrgan(
+                      "Digestive System",
+                      "digestive-system"
+                    )
+                  }
+                  aria-label="Digestive System"
+                  className="
+                    absolute
+                    top-[42%]
+                    left-[47%]
+                    w-6
+                    h-6
+                    rounded-full
+                    bg-yellow-400
+                    border-2
+                    border-yellow-200
+                    shadow-md
+                    hover:scale-125
+                    transition-transform
+                    z-20
+                  "
+                />
+              )}
 
-          <h2 className="text-2xl font-bold mb-4">
-            {selectedOrgan}
-          </h2>
+              {/* ================= BONES ================= */}
+              {hasDeficiency("Vitamin D") && (
 
-          {organInfo ? (
+                <button
+                  onClick={() => selectOrgan("Bones", "bones")}
+                  aria-label="Bones"
+                  className="
+                    absolute
+                    top-[69%]
+                    left-[55%]
+                    w-6
+                    h-6
+                    rounded-full
+                    bg-yellow-400
+                    border-2
+                    border-yellow-200
+                    shadow-md
+                    hover:scale-125
+                    transition-transform
+                    z-20
+                  "
+                />
+              )}
 
-            <>
-              <h3 className="font-semibold mb-2">
-                Affected Nutrient
-              </h3>
+              {/* ================= MUSCLES ================= */}
+              {hasDeficiency("Vitamin D") && (
 
-              <p className="mb-5">
-                {organInfo.deficiency}
-              </p>
+                <button
+                  onClick={() => selectOrgan("Muscles", "muscles")}
+                  aria-label="Muscles"
+                  className="
+                    absolute
+                    top-[30%]
+                    left-[68%]
+                    w-6
+                    h-6
+                    rounded-full
+                    bg-yellow-400
+                    border-2
+                    border-yellow-200
+                    shadow-md
+                    hover:scale-125
+                    transition-transform
+                    z-20
+                  "
+                />
+              )}
 
-              <h3 className="font-semibold mb-2">
-  Possible Symptoms
-</h3>
+            </div>
 
-<ul className="list-disc ml-5 space-y-2 mb-6">
-  {organInfo.effects.map((effect) => (
-    <li key={effect}>
-      {effect}
-    </li>
-  ))}
-</ul>
+          </div>
+        </Card>
 
-<h3 className="font-semibold mb-2">
-  Recommended Foods
-</h3>
 
-<div className="flex flex-wrap gap-2">
-  {recommendations[organInfo.deficiency]?.length ? (
-    recommendations[organInfo.deficiency].map((food) => (
-      <span
-        key={food}
-        className="px-3 py-1 bg-green-100 text-green-700 rounded-full"
-      >
-        {food}
-      </span>
-    ))
-  ) : (
-    <p>No recommendations available for this nutrient.</p>
-  )}
-</div>
+        {/* =======================================================
+            RIGHT - ORGAN INFORMATION
+        ======================================================= */}
+        <Card className="!p-0 overflow-hidden rounded-[22px] border border-gray-200 shadow-sm">
 
-            </>
+          {/* GREEN HEADER */}
+          {/* ONLY GREEN COLOR CHANGED — NO GRADIENT */}
+          <div className="bg-[#005B43] text-white px-6 py-5">
 
-          ) : (
+            <div className="flex items-center gap-4">
 
-            <p>Loading...</p>
+              <div className="
+                w-14
+                h-14
+                rounded-full
+                border
+                border-green-300/60
+                bg-green-900/20
+                flex
+                items-center
+                justify-center
+                text-3xl
+              ">
+                🧠
+              </div>
 
-          )}
+              <h2 className="text-3xl font-bold">
+                {selectedOrgan}
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          {/* CONTENT */}
+          <div className="px-6 py-6">
+
+            {organInfo ? (
+
+              <div className="space-y-6">
+
+                {/* ================= AFFECTED NUTRIENT ================= */}
+                <section>
+
+                  <div className="flex items-center gap-3 mb-3">
+
+                    <span className="w-3 h-3 rounded-full bg-green-600" />
+
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      Affected Nutrient
+                    </h3>
+
+                  </div>
+
+                  <span className="
+                    inline-block
+                    px-4
+                    py-2
+                    rounded-full
+                    bg-green-50
+                    text-green-700
+                    font-medium
+                    border
+                    border-green-100
+                  ">
+                    {organInfo.deficiency}
+                  </span>
+
+                </section>
+
+
+                {/* DIVIDER */}
+                <div className="border-t border-gray-200" />
+
+
+                {/* ================= SYMPTOMS ================= */}
+                <section>
+
+                  <div className="flex items-center gap-3 mb-3">
+
+                    <span className="w-3 h-3 rounded-full bg-green-600" />
+
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      Possible Symptoms
+                    </h3>
+
+                  </div>
+
+                  <div className="
+                    bg-[#F4FAF7]
+                    border
+                    border-green-100
+                    rounded-xl
+                    p-5
+                  ">
+
+                    <ul className="space-y-3">
+
+                      {organInfo.effects?.map((effect) => (
+
+                        <li
+                          key={effect}
+                          className="flex items-center gap-3 text-gray-800"
+                        >
+
+                          <span className="
+                            w-3
+                            h-3
+                            rounded-full
+                            bg-green-600
+                            shrink-0
+                          " />
+
+                          <span>{effect}</span>
+
+                        </li>
+
+                      ))}
+
+                    </ul>
+
+                  </div>
+
+                </section>
+
+
+                {/* DIVIDER */}
+                <div className="border-t border-gray-200" />
+
+
+                {/* ================= RECOMMENDED FOODS ================= */}
+                <section>
+
+                  <div className="flex items-center gap-3 mb-3">
+
+                    <span className="w-3 h-3 rounded-full bg-green-600" />
+
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      Recommended Foods
+                    </h3>
+
+                  </div>
+
+                  <div className="
+                    bg-green-50/70
+                    border
+                    border-green-100
+                    rounded-2xl
+                    p-4
+                  ">
+
+                    {recommendations[organInfo.deficiency]?.length ? (
+
+                      <div className="flex flex-wrap gap-2">
+
+                        {recommendations[organInfo.deficiency].map(
+                          (food) => (
+
+                            <span
+                              key={food}
+                              className="
+                                px-3
+                                py-2
+                                bg-white
+                                border
+                                border-green-200
+                                text-green-700
+                                rounded-full
+                                text-sm
+                                font-medium
+                              "
+                            >
+                              🌿 {food}
+                            </span>
+
+                          )
+                        )}
+
+                      </div>
+
+                    ) : (
+
+                      <div className="flex items-center gap-3 text-gray-600">
+
+                        <span className="text-xl">
+                          🌿
+                        </span>
+
+                        <p className="text-sm">
+                          No recommendations available for this nutrient.
+                        </p>
+
+                      </div>
+
+                    )}
+
+                  </div>
+
+                </section>
+
+              </div>
+
+            ) : (
+
+              <div className="flex items-center justify-center py-20">
+
+                <p className="text-gray-500">
+                  Loading...
+                </p>
+
+              </div>
+
+            )}
+
+          </div>
 
         </Card>
 
       </div>
 
     </div>
-
   );
-
 };
 
 export default BodyExplorer;
