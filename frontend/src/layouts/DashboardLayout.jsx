@@ -13,6 +13,7 @@ const DashboardLayout = () => {
 
   // Only Medical Reports should have NO scrollbar
   const isMedicalReports = location.pathname === '/medical-reports';
+  const isBodyExplorer = location.pathname === '/body-explorer';
 
   return (
     <div className="min-h-screen flex flex-col lg:flex-row">
@@ -32,18 +33,16 @@ const DashboardLayout = () => {
         />
 
         <main
-          className={`flex-1 bg-white ${
-            isMedicalReports
-              ? 'overflow-hidden'
-              : 'overflow-y-auto'
-          }`}
-        >
-          <div className="max-w-7xl mx-auto">
-
-            <Outlet />
-
-          </div>
-        </main>
+  className={`flex-1 bg-white ${
+    isMedicalReports
+      ? 'overflow-hidden'
+      : 'overflow-y-auto'
+  }`}
+>
+  <div className="w-full">
+    <Outlet />
+  </div>
+</main>
 
       </div>
 

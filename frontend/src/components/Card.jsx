@@ -1,17 +1,20 @@
 import React from 'react';
 
-const Card = ({ 
-  children, 
-  className = '', 
+const Card = ({
+  children,
+  className = '',
   hover = false,
-  ...props 
+  ...props
 }) => {
   const baseStyles =
-  'bg-white border border-gray-200 rounded-[24px] shadow-sm p-6';
-  const hoverStyles = hover ? 'hover:shadow-2xl hover:scale-[1.02] transition-all duration-300' : '';
-  
+    'bg-white border border-gray-200 rounded-2xl shadow-sm p-5';
+
+  const hoverStyles = hover
+    ? 'hover:shadow-md transition-shadow duration-200'
+    : '';
+
   return (
-    <div 
+    <div
       className={`${baseStyles} ${hoverStyles} ${className}`}
       {...props}
     >
