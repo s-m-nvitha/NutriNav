@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 
 const DashboardLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const { user } = useAuth();
 
   const location = useLocation();
 
-  // Only Medical Reports should have NO scrollbar
+  // Medical Reports and Results should have NO scrollbar
   const isMedicalReports = location.pathname === '/medical-reports';
-  const isBodyExplorer = location.pathname === '/body-explorer';
+  const isResults = location.pathname === '/results';
 
   return (
     <div className="min-h-screen flex flex-col lg:flex-row">
@@ -34,14 +32,15 @@ const DashboardLayout = () => {
 
         <main
   className={`flex-1 bg-white ${
-    isMedicalReports
+    isMedicalReports || isResults
       ? 'overflow-hidden'
       : 'overflow-y-auto'
   }`}
 >
-  <div className="w-full">
+  <div className="w-full px-5 lg:px-6">
     <Outlet />
   </div>
+  
 </main>
 
       </div>

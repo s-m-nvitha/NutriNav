@@ -93,7 +93,7 @@ useEffect(() => {
 }, []);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-5">
       {/* Profile Completion Status */}
       {completion < 100 && (
   <Link to="/health-profile">
@@ -127,7 +127,7 @@ useEffect(() => {
       {/* AI Nutrition Coach */}
 <Card
   hover
-  className="relative overflow-hidden border-0 bg-gradient-to-r from-[#06271d] via-[#073b29] to-[#06271d] text-white min-h-[230px]"
+  className="relative overflow-hidden border-0 bg-gradient-to-r from-[#06271d] via-[#073b29] to-[#06271d] text-white min-h-[200px]"
 >
   <div className="relative z-10 grid grid-cols-1 lg:grid-cols-[1.1fr_1.2fr_0.8fr] gap-6 items-center">
 
@@ -135,7 +135,7 @@ useEffect(() => {
     <div className="space-y-2">
 
       <div>
-        <h3 className="text-3xl md:text-4xl font-bold leading-tight">
+        <h3 className="text-2xl md:text-3xl font-bold leading-tight">
           AI Nutrition
           <span className="block text-green-400">
             Coach
@@ -232,7 +232,7 @@ useEffect(() => {
       <img
         src={robotImage}
         alt="NutriNav AI Nutrition Coach"
-        className="w-44 md:w-52 lg:w-60 object-contain drop-shadow-2xl"
+        className="w-40 md:w-44 lg:w-52 object-contain drop-shadow-2xl"
       />
 
     </div>
@@ -246,7 +246,7 @@ useEffect(() => {
       
 
       {/* Preview Cards Grid */}
-<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch">
 
   {/* ================= DEFICIENCY ANALYSIS ================= */}
   <Link to="/results/deficiency" className="h-full group">
@@ -256,9 +256,9 @@ useEffect(() => {
     >
 
       {/* Header */}
-      <div className="flex items-center gap-4 mb-5">
+      <div className="flex items-center gap-3 mb-4">
 
-        <div className="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center text-3xl group-hover:scale-110 transition-transform">
+        <div className="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
           🩸
         </div>
 
@@ -320,9 +320,9 @@ useEffect(() => {
     >
 
       {/* Header */}
-      <div className="flex items-center gap-4 mb-5">
+      <div className="flex items-center gap-3 mb-4">
 
-        <div className="w-14 h-14 rounded-full bg-green-50 flex items-center justify-center text-3xl group-hover:scale-110 transition-transform">
+        <div className="w-12 h-12 rounded-full bg-green-50 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
           🥗
         </div>
 
@@ -396,9 +396,9 @@ useEffect(() => {
     >
 
       {/* Header */}
-      <div className="flex items-center gap-4 mb-5">
+      <div className="flex items-center gap-3 mb-4">
 
-        <div className="w-14 h-14 rounded-full bg-purple-50 flex items-center justify-center text-3xl group-hover:scale-110 transition-transform">
+        <div className="w-12 h-12 rounded-full bg-purple-50 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
           🧍
         </div>
 
@@ -477,7 +477,7 @@ useEffect(() => {
     Quick Actions
   </h3>
 
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 
     {/* Upload Report */}
     <Link to="/medical-reports" className="group">
