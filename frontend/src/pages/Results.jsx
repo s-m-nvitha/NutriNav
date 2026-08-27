@@ -198,7 +198,7 @@ const Results = () => {
             </div>
 
             <div>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-gray-700">
                 Deficiencies Found
               </p>
 
@@ -228,7 +228,7 @@ const Results = () => {
             </div>
 
             <div>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-gray-700">
                 Overall Status
               </p>
 
@@ -243,7 +243,7 @@ const Results = () => {
 
 
         {/* ANALYSIS INFORMATION */}
-        <div className="rounded-2xl border border-gray-100 bg-white p-4">
+        <div className="rounded-2xl border border-gray-300 bg-white p-4">
 
           <div className="flex items-center gap-4 mb-3">
 
@@ -252,7 +252,7 @@ const Results = () => {
             </div>
 
             <div>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-gray-700">
                 Analysis
               </p>
 
@@ -271,7 +271,7 @@ const Results = () => {
             </div>
 
             <div>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-gray-700">
                 Status
               </p>
 
@@ -337,7 +337,7 @@ const Results = () => {
                     Your level is {item.value || '6.5'} g/dL
                   </p>
 
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-xs text-gray-700 mt-1">
                     Normal range: 12.0 - 16.0 g/dL
                   </p>
 
@@ -346,7 +346,7 @@ const Results = () => {
               ))
             ) : (
 
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-700">
                 No deficiencies detected.
               </p>
 
@@ -354,7 +354,7 @@ const Results = () => {
 
 
             {/* UPLOAD REPORT */}
-            <div className="rounded-2xl border border-gray-100 bg-gray-50 p-3.5">
+            <div className="rounded-2xl border border-gray-300 bg-gray-50 p-3.5">
 
               <div className="flex items-center gap-3">
 
@@ -367,7 +367,7 @@ const Results = () => {
                     Upload New Report
                   </p>
 
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-gray-700">
                     Upload reports for detailed analysis
                   </p>
                 </div>
@@ -489,7 +489,7 @@ const Results = () => {
 
       <div
         key={`${food}-${index}`}
-        className="rounded-2xl border border-gray-100 bg-white shadow-sm overflow-hidden min-w-0"
+        className="rounded-2xl border border-gray-300 bg-white shadow-sm overflow-hidden min-w-0"
       >
 
         {/* FOOD IMAGE / ICON */}
@@ -516,7 +516,7 @@ const Results = () => {
             {food}
           </p>
 
-          <p className="text-[10px] text-gray-500 mt-1">
+          <p className="text-[10px] text-gray-700 mt-1">
             Rich in {nutrient}
           </p>
 
@@ -577,7 +577,7 @@ const Results = () => {
           <div className="grid grid-cols-3 gap-2">
 
             {/* HABIT 1 */}
-            <div className="rounded-2xl border border-gray-100 p-3 flex gap-3">
+            <div className="rounded-2xl border border-gray-300 p-3 flex gap-3">
 
               <div className="w-10 h-10 shrink-0 rounded-full bg-green-100 flex items-center justify-center">
                 🌿
@@ -588,7 +588,7 @@ const Results = () => {
                   Eat Iron Rich Foods
                 </p>
 
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-gray-700 mt-1">
                   Include spinach, lentils, and beans in your meals.
                 </p>
               </div>
@@ -597,7 +597,7 @@ const Results = () => {
 
 
             {/* HABIT 2 */}
-            <div className="rounded-2xl border border-gray-100 p-3 flex gap-3">
+            <div className="rounded-2xl border border-gray-300 p-3 flex gap-3">
 
               <div className="w-10 h-10 shrink-0 rounded-full bg-green-100 flex items-center justify-center">
                 ☕
@@ -608,7 +608,7 @@ const Results = () => {
                   Avoid Tea & Coffee
                 </p>
 
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-gray-700 mt-1">
                   Avoid consuming them around meals.
                 </p>
               </div>
@@ -617,7 +617,7 @@ const Results = () => {
 
 
             {/* HABIT 3 */}
-            <div className="rounded-2xl border border-gray-100 p-3 flex gap-3">
+            <div className="rounded-2xl border border-gray-300 p-3 flex gap-3">
 
               <div className="w-10 h-10 shrink-0 rounded-full bg-orange-100 flex items-center justify-center">
                 🍊
@@ -628,7 +628,7 @@ const Results = () => {
                   Include Vitamin C
                 </p>
 
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-gray-700 mt-1">
                   Include oranges and other vitamin C foods.
                 </p>
               </div>
@@ -658,12 +658,12 @@ const Results = () => {
           </div>
 
 
-          <div className="rounded-2xl border border-gray-100 p-3">
+          <div className="rounded-2xl border border-gray-300 p-3">
 
             <div className="grid grid-cols-3 gap-3">
 
               <div>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-gray-700">
                   Iron Level
                 </p>
 
@@ -677,7 +677,7 @@ const Results = () => {
 
 
               <div>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-gray-700">
                   Goal
                 </p>
 
@@ -691,7 +691,7 @@ const Results = () => {
 
 
               <div>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-gray-700">
                   Progress
                 </p>
 
