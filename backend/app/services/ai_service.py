@@ -3,7 +3,6 @@ from dotenv import load_dotenv
 from google import genai
 
 from .knowledge_retriever import retrieve_knowledge
-from .meal_explainer import find_food_reason
 
 load_dotenv()
 
@@ -30,29 +29,6 @@ def generate_nutrition_response(
             f"Assistant: {chat['assistant']}\n\n"
         )
 
-
-    # -----------------------------
-    # Meal explanation shortcut
-    # -----------------------------
-
-    meal_words = [
-        "breakfast",
-        "lunch",
-        "dinner",
-        "snacks",
-        "meal"
-    ]
-
-
-    if any(word in question.lower() for word in meal_words):
-
-        reason = find_food_reason(
-            user_context.get("meal_plan", {}),
-            question
-        )
-
-        if isinstance(reason, dict):
-            return reason["explanation"]
 
 
     # -----------------------------

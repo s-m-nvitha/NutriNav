@@ -97,10 +97,10 @@ def get_meal_plan(deficiencies, profile=None):
 
     for deficiency in deficiencies:
 
-        nutrient = deficiency.nutrient_name
+        nutrient = deficiency.nutrient_name.strip().lower()
 
 
-        if nutrient == "Vitamin D":
+        if nutrient == "vitamin d":
 
             meal_plan["breakfast"].append(
                 {
@@ -117,7 +117,7 @@ def get_meal_plan(deficiencies, profile=None):
             )
 
 
-        elif nutrient == "Vitamin B12":
+        elif nutrient == "vitamin b12":
 
             meal_plan["breakfast"].append(
                 {
@@ -134,7 +134,7 @@ def get_meal_plan(deficiencies, profile=None):
             )
 
 
-        elif nutrient == "Iron":
+        elif nutrient == "iron":
 
             meal_plan["lunch"].append(
                 {
@@ -232,9 +232,15 @@ def get_meal_plan(deficiencies, profile=None):
     if "dairy" in allergies:
 
         dairy_keywords = [
-            "milk",
-            "yogurt"
-        ]
+    "milk",
+    "yogurt",
+    "cheese",
+    "butter",
+    "cream",
+    "paneer",
+    "curd",
+    "ghee"
+]
 
 
         for meal in meal_plan:

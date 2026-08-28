@@ -8,7 +8,6 @@ from .auth import get_current_user
 from app.services.meal_planner import get_meal_plan
 from app.services.meal_explainer_ai import explain_meal_with_ai
 from ..schemas.meal import MealExplainRequest
-from app.services.meal_explainer import find_food_reason
 
 
 router = APIRouter(
@@ -81,9 +80,21 @@ def generate_meal_plan(
 
 
     return {
-        "personalization": personalization,
-        "meal_plan": meal_plan
+    "personalization": personalization,
+    "meal_plan": meal_plan,
+    "summary": {
+        "deficiencies_count": len(deficiencies),
+        "deficiencies": [
+            {
+                "nutrient_name": d.nutrient_name,
+                "value": d.value,
+                "unit": d.unit,
+                "severity": d.severity
+            }
+            for d in deficiencies
+        ]
     }
+}
 
 @router.post("/explain")
 def explain_meal(
@@ -109,11 +120,6 @@ def explain_meal(
         .first()
     )
 
-
-    meal_plan = get_meal_plan(
-        deficiencies,
-        profile
-    )
 
 
     explanation = explain_meal_with_ai(

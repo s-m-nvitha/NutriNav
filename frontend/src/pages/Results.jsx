@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import Card from '../components/Card';
+import { useNavigate } from 'react-router-dom';import Card from '../components/Card';
 import { deficiencyReportService } from '../services/deficiencyReportService';
 import healthPlate from '../assets/nnplate.png';
 
+
 const Results = () => {
+  const navigate = useNavigate();
+
   const [deficiencies, setDeficiencies] = useState([]);
   const [recommendations, setRecommendations] = useState({});
   const [aiExplanations, setAiExplanations] = useState([]);
   const [foodStart, setFoodStart] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   const totalDeficiencies = deficiencies.length;
 
@@ -50,38 +54,48 @@ const Results = () => {
   };
 
   useEffect(() => {
-    loadDeficiencies();
-    loadRecommendations();
-  }, []);
-
-  const loadDeficiencies = async () => {
+  const loadResults = async () => {
     try {
-      const data = await deficiencyReportService.getAll();
-      setDeficiencies(data);
-    } catch (err) {
-      console.log('No deficiencies found');
-    }
-  };
+      const [deficiencyResult, recommendationResult] =
+        await Promise.all([
+          deficiencyReportService.getAll(),
+          deficiencyReportService.getRecommendations(),
+        ]);
 
-  const loadRecommendations = async () => {
-    try {
-      const data =
-        await deficiencyReportService.getRecommendations();
+      console.log("Deficiencies:", deficiencyResult);
+      console.log("Recommendations:", recommendationResult);
 
-      console.log('Recommendations:', data);
+      setDeficiencies(deficiencyResult || []);
 
       setRecommendations(
-        data.food_recommendations || {}
+        recommendationResult.food_recommendations || {}
       );
 
       setAiExplanations(
-        data.deficiencies || []
+        recommendationResult.deficiencies || []
       );
-    } catch (err) {
-      console.log('No recommendations found');
+
+
+    } catch (error) {
+      console.error("Error loading Results:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
+  loadResults();
+}, []);
+
+  
+if (loading) {
+  return (
+    <div className="flex items-center justify-center min-h-[300px]">
+      <p className="text-gray-600">
+        Loading results...
+      </p>
+    </div>
+  );
+}
   return (
     <div className="space-y-3 pb-2">
 
@@ -207,10 +221,14 @@ const Results = () => {
               </p>
 
               {totalDeficiencies > 0 && (
-                <span className="inline-block mt-1 px-3 py-1 text-[10px] font-semibold rounded-full bg-red-100 text-red-600">
-                  severe
-                </span>
-              )}
+  <span
+    className={`inline-block mt-1 px-3 py-1 text-[10px] font-semibold rounded-full ${
+      getSeverityColor(deficiencies[0]?.severity)
+    }`}
+  >
+    {deficiencies[0]?.severity}
+  </span>
+)}
             </div>
 
           </div>
@@ -334,7 +352,7 @@ const Results = () => {
                   </div>
 
                   <p className="text-xs text-gray-600">
-                    Your level is {item.value || '6.5'} g/dL
+                    Your level is {item.value} {item.unit}
                   </p>
 
                   <p className="text-xs text-gray-700 mt-1">
@@ -374,9 +392,12 @@ const Results = () => {
 
               </div>
 
-              <button className="mt-3 ml-1 px-4 py-2 rounded-full bg-[#075e45] text-white text-xs font-semibold hover:bg-[#064e3b] transition">
-                Upload Report
-              </button>
+              <button
+  onClick={() => navigate("/medical-reports")}
+  className="mt-3 ml-1 px-4 py-2 rounded-full bg-[#075e45] text-white text-xs font-semibold hover:bg-[#064e3b] transition"
+>
+  Upload Report
+</button>
 
             </div>
 
@@ -473,9 +494,12 @@ const Results = () => {
               Recommended Foods
             </h3>
 
-            <button className="px-4 py-2 rounded-full bg-[#075e45] text-white text-xs font-semibold">
-              View Full Plan →
-            </button>
+            <button
+  onClick={() => navigate("/meal-planner")}
+  className="px-4 py-2 rounded-full bg-[#075e45] text-white text-xs font-semibold hover:bg-[#064e3b] transition"
+>
+  View Full Plan →
+</button>
 
           </div>
 
@@ -668,11 +692,11 @@ const Results = () => {
                 </p>
 
                 <p className="text-xl font-bold text-red-600">
-                  6.5{' '}
-                  <span className="text-xs">
-                    g/dL
-                  </span>
-                </p>
+  {deficiencies[0]?.value || '--'}{' '}
+  <span className="text-xs">
+    {deficiencies[0]?.unit || ''}
+  </span>
+</p>
               </div>
 
 
