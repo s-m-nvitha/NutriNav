@@ -14,27 +14,7 @@ const MealPlanner = () => {
   const snacksRef = useRef(null);
   const dinnerRef = useRef(null);
 
-  // =====================================================
-  // SCROLL FUNCTIONS
-  // =====================================================
-
-  const scrollVertical = (ref) => {
-    if (ref.current) {
-      ref.current.scrollBy({
-        top: 250,
-        behavior: "smooth",
-      });
-    }
-  };
-
-  const scrollHorizontal = (ref) => {
-    if (ref.current) {
-      ref.current.scrollBy({
-        left: 350,
-        behavior: "smooth",
-      });
-    }
-  };
+  
 
   // =====================================================
   // NAVIGATION
@@ -447,10 +427,6 @@ const MealPlanner = () => {
 
           </div>
 
-          <button className="text-sm text-gray-700 mt-4">
-            View details →
-          </button>
-
         </div>
 
 
@@ -481,10 +457,6 @@ const MealPlanner = () => {
             </div>
 
           </div>
-
-          <button className="text-sm text-gray-700 mt-4">
-            View all →
-          </button>
 
         </div>
 
@@ -517,10 +489,6 @@ const MealPlanner = () => {
 
           </div>
 
-          <button className="text-sm text-gray-700 mt-4">
-            Upload new →
-          </button>
-
         </div>
 
 
@@ -551,13 +519,6 @@ const MealPlanner = () => {
             </div>
 
           </div>
-
-          <button
-            onClick={() => navigate("/progress")}
-            className="text-sm text-gray-700 mt-4"
-          >
-            View progress →
-          </button>
 
         </div>
 
@@ -598,19 +559,6 @@ const MealPlanner = () => {
 
             </div>
 
-            {/* BREAKFAST ARROW */}
-
-            <div className="flex items-center justify-center mt-4">
-
-              <button
-                onClick={() => scrollVertical(breakfastRef)}
-                className="w-10 h-10 rounded-full bg-green-700 text-white flex items-center justify-center text-lg font-bold hover:bg-green-800 shadow-md transition"
-                title="Scroll down"
-              >
-                ↓
-              </button>
-
-            </div>
 
           </div>
 
@@ -636,19 +584,6 @@ const MealPlanner = () => {
 
             </div>
 
-            {/* LUNCH ARROW */}
-
-            <div className="flex items-center justify-center mt-4">
-
-              <button
-                onClick={() => scrollVertical(lunchRef)}
-                className="w-10 h-10 rounded-full bg-green-700 text-white flex items-center justify-center text-lg font-bold hover:bg-green-800 shadow-md transition"
-                title="Scroll down"
-              >
-                ↓
-              </button>
-
-            </div>
 
           </div>
 
@@ -674,19 +609,6 @@ const MealPlanner = () => {
 
             </div>
 
-            {/* SNACKS ARROW */}
-
-            <div className="flex items-center justify-center mt-4">
-
-              <button
-                onClick={() => scrollVertical(snacksRef)}
-                className="w-10 h-10 rounded-full bg-green-700 text-white flex items-center justify-center text-lg font-bold hover:bg-green-800 shadow-md transition"
-                title="Scroll down"
-              >
-                ↓
-              </button>
-
-            </div>
 
           </div>
 
@@ -726,20 +648,6 @@ const MealPlanner = () => {
 
           </div>
 
-
-          {/* DINNER ARROW */}
-
-          <div className="flex items-center justify-end mt-4">
-
-            <button
-              onClick={() => scrollHorizontal(dinnerRef)}
-              className="w-10 h-10 rounded-full bg-green-700 text-white flex items-center justify-center text-lg font-bold hover:bg-green-800 shadow-md transition"
-              title="Scroll right"
-            >
-              →
-            </button>
-
-          </div>
 
         </div>
 
